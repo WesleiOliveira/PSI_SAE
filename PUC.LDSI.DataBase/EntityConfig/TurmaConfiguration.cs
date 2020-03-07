@@ -11,7 +11,7 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Turma> builder)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
