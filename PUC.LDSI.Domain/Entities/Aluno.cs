@@ -9,7 +9,15 @@ namespace PUC.LDSI.Domain.Entities
         public Aluno() { }
         public override string [] Validate()
         {
-            throw new NotImplementedException();
+            
+            var erros = new List<string>();
+
+            if(TurmaId == 0)
+                erros.Add("A turma precisa ser informada!");
+                
+            if (string.IsnNullOrEmpty(Nome))
+                erros.Add("O nome precisa ser informado!");
+            return erros.ToArray();
         }
        
         public int Id { get; set; }
