@@ -24,6 +24,7 @@ namespace PUC.LDSI.Domain.Entities
         public DateTime DataCriacao { get; set; }
         public varchar Nome { get; set; }
         public int Turma { get; set; }
+
         
 
     }
