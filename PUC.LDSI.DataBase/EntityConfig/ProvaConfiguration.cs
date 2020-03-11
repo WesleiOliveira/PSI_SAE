@@ -11,7 +11,15 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Prova> builder)
         {
-            throw new NotImplementedException();
+            builder.Property(x => x.DataProva).IsRequired(); // Campo NOT NULL
+            builder.Property(x => x.DataProva).HasColumnType("datetime"); // Tipo de dados e precisão
+
+            builder.Property(x => x.NotaObtida).IsRequired(); // Campo NOT NULL
+            builder.Property(x => x.NotaObtida).HasColumnType("decimal(4,2)"); // Tipo de dados e precisão
+
+            builder.HasOne(x => x.Aluno).WithMany(x => x.Prova).HasForeignKey(x => x.AlunoId); // FK
+            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Prova).HasForeignKey(x => x.AvaliacaoId); // FK
+            new EntityConfig(); // Aplica as configurações dos atributos
         }
     }
 }
