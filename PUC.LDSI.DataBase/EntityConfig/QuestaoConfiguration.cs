@@ -11,7 +11,14 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Questao> builder)
         {
-            throw new NotImplementedException();
+            builder.Property(x => x.Tipo).IsRequired(); // Campo NOT NULL
+            builder.Property(x => x.Tipo).HasColumnType("int"); // Tipo de dados e precisão
+
+            builder.Property(x => x.Enunciado).IsRequired(); // Campo NOT NULL
+            builder.Property(x => x.Enunciado).HasColumnType("varchar(500)"); // Tipo de dados e precisão
+
+            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Questao).HasForeignKey(x => x.AvaliacaoId); // FK
+            new EntityConfig(); // Aplica as configurações dos atributos
         }
     }
 }
