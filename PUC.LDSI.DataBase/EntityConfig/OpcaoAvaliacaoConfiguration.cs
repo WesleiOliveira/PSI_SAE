@@ -17,7 +17,7 @@ namespace PUC.LDSI.DataBase.EntityConfig
             builder.Property(x => x.Verdadeira).IsRequired(); // Campo NOT NULL
             builder.Property(x => x.Verdadeira).HasColumnType("bool"); // Tipo de dados e precisão
 
-            builder.HasOne(x => x.Questao).WithMany(x => x.OpcaoAvaliacao).HasForeignKey(x => x.QuestaoId); // FK
+            builder.HasOne(x => x.Questao).WithMany(x => x.OpcoesAvaliacao).HasForeignKey(x => x.QuestaoId); // FK
             new EntityConfig(); // Aplica as configurações dos atributos
         }
     }

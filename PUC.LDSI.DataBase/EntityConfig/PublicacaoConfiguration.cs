@@ -20,8 +20,8 @@ namespace PUC.LDSI.DataBase.EntityConfig
             builder.Property(x => x.ValorProva).IsRequired(); // Campo NOT NULL
             builder.Property(x => x.ValorProva).HasColumnType("int"); // Tipo de dados e precisão
 
-            builder.HasOne(x => x.Turma).WithMany(x => x.Publicacao).HasForeignKey(x => x.TurmaId); // FK
-            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Publicacao).HasForeignKey(x => x.AvaliacaoId); // FK
+            builder.HasOne(x => x.Turma).WithMany(x => x.Publicacoes).HasForeignKey(x => x.TurmaId); // FK
+            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Publicacoes).HasForeignKey(x => x.AvaliacaoId); // FK
             new EntityConfig(); // Aplica as configurações dos atributos
         }
     }

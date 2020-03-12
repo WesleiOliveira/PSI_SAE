@@ -17,7 +17,7 @@ namespace PUC.LDSI.DataBase.EntityConfig
             builder.Property(x => x.Enunciado).IsRequired(); // Campo NOT NULL
             builder.Property(x => x.Enunciado).HasColumnType("varchar(500)"); // Tipo de dados e precisão
 
-            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Questao).HasForeignKey(x => x.AvaliacaoId); // FK
+            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Questoes).HasForeignKey(x => x.AvaliacaoId); // FK
             new EntityConfig(); // Aplica as configurações dos atributos
         }
     }
