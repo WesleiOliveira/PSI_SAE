@@ -12,7 +12,14 @@ namespace PUC.LDSI.Domain.Entities
         public string Enunciado { get; set; }
         public override string[] Validate()
         {
-            throw new NotImplementedException();
+            var erros = new List<string>();
+            if (AvaliacaoId == 0)
+                erros.Add("A Avaliação deve ser informada");
+            if (Tipo == 0)
+                erros.Add("O Tipo deve ser informado");
+            if (string.IsNullOrEmpty(Enunciado))
+                erros.Add("O Enunciado precisa ser informado");
+            return erros.ToArray();
         }
     }
 }

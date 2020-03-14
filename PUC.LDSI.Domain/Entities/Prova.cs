@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,7 +14,15 @@ namespace PUC.LDSI.Domain.Entities
 
         public override string[] Validate()
         {
-            throw new NotImplementedException();
+            var erros = new List<string>();
+            if (AvaliacaoId == 0)
+                erros.Add("A Avaliação deve ser informada");
+            if (AlunoId == 0)
+                erros.Add("O Aluno deve ser informado");
+            DateTime resultado = DateTime.MinValue;
+            if (string.IsNullOrEmpty(DataProva.ToString()))
+                erros.Add("A Data da Prova precisa ser informado");
+            return erros.ToArray();
         }
     }
 }

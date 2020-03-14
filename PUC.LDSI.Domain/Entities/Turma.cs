@@ -11,7 +11,10 @@ namespace PUC.LDSI.Domain.Entities
 
         public override string[] Validate()
         {
-            throw new NotImplementedException();
+            var erros = new List<string>();
+            if (string.IsNullOrEmpty(Nome))
+                erros.Add("O Nome deve ser informada");
+            return erros.ToArray();
         }
 
     }

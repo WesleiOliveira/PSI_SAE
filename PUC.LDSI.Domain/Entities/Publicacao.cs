@@ -15,7 +15,18 @@ namespace PUC.LDSI.Domain.Entities
 
         public override string[] Validate()
         {
-            throw new NotImplementedException();
+            var erros = new List<string>();
+            if (AvaliacaoId == 0)
+                erros.Add("A Avaliação deve ser informada");
+            if (TurmaId == 0)
+                erros.Add("A Turma deve ser informado");
+            if (string.IsNullOrEmpty(DataInicio.ToString()))
+                erros.Add("A Data de inicio precisa ser informado");
+            if (string.IsNullOrEmpty(DataFim.ToString()))
+                erros.Add("A Data Fim precisa ser informado");
+            if (ValorProva  <= 0 )
+                erros.Add("A Valor da prova precisa ser informado");
+            return erros.ToArray();
         }
 
     }
