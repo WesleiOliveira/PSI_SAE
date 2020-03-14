@@ -4,13 +4,10 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class OpcapProva : Entitity
+    public class OpcapProva : Entity
     {
         public OpcapProva() { }
-
-        public int Id { get; set; }
-        public DateTime DataCriacao { get; set; }
-        public int OpcaoAvaliacao { get; set; }
+        public int OpcaoAvaliacaoId { get; set; }
         public int QuestaoProvaId { get; set; }
         public bool Resposta { get; set; }
 

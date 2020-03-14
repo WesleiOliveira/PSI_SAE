@@ -8,7 +8,6 @@ namespace PUC.LDSI.Domain.Entities
     {
         public Aluno() { }
         public string Nome { get; set; }
-        public int Turma { get; set; }
         public Turma TurmaId { get; set; }
          public override string [] Validate()
         {
