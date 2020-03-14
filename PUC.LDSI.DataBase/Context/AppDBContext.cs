@@ -28,6 +28,10 @@ namespace PUC.LDSI.DataBase
             //Example - Apply Configuration
             //modelbuilder.ApplyConfiguration(new EntityNameConfiguration());
 
+            modelbuilder.ApplyConfiguration(new AlunoConfiguration());
+            modelbuilder.ApplyConfiguration(new AvaliacaoConfiguration());
+            modelbuilder.ApplyConfiguration(new ProfessorConfiguration());
+
             base.OnModelCreating(modelbuilder);
         }
 
