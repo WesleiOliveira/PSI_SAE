@@ -11,7 +11,10 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Professor> builder)
         {
-            throw new NotImplementedException();
+            builder.Property(x => x.Nome).IsRequired(); // Campo NOT NULL
+            builder.Property(x => x.Nome).HasColumnType("varchar(100)"); // Tipo de dados e precisão
+
+            new EntityConfig(); // Aplica as configurações dos atributos
         }
     }
 }
