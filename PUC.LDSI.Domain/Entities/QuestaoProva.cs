@@ -4,17 +4,22 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class Professor : Entity
+    public class QuestaoProva : Entity
     {
-        public Professor() { }
-     
+        public QuestaoProva() { }
+
         public int Id { get; set; }
         public DateTime DataCriacao { get; set; }
-        public string Nome { get; set; }
+        public int QuestaoId { get; set; }
+        public int ProvaId { get; set; }
+        public decimal Nota { get; set; }
 
-          public override string[] Validate()
+        public override string[] Validate()
         {
             throw new NotImplementedException();
         }
+
+        
+
     }
 }
