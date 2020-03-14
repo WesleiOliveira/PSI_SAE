@@ -11,7 +11,8 @@ namespace PUC.LDSI.Domain.Entities
 
         public override string[] Validate()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(Nome))
+                erros.Add("O nome da turma precisa ser informado!");
         }
 
     }

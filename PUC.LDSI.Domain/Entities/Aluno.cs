@@ -14,9 +14,9 @@ namespace PUC.LDSI.Domain.Entities
             var erros = new List<string>();
 
             if (TurmaId == 0)
-                erros.Add("A turma Precisa ser informada");
+                erros.Add("A turma precisa ser informada!");
             if (string.IsNullOrEmpty(Nome))
-                erros.Add("O Nome precisa ser informado");
+                erros.Add("O nome do aluno precisa ser informado!");
             return erros.ToArray();
         }
         

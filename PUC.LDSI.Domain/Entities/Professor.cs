@@ -13,15 +13,10 @@ namespace PUC.LDSI.Domain.Entities
         public override string[] Validate()
         {
             var erros = new List<string>();
+                
+            if (string.IsNullOrEmpty(Nome))
+                erros.Add("O nome do professor precisa ser informado!");
 
-            if (ProfessorId == 0)
-                erros.Add("O Professor Precisa ser informado");
-            if (string.IsNullOrEmpty(Disciplina))
-                erros.Add("A Disciplina precisa ser informado");
-            if (string.IsNullOrEmpty(Materia))
-                erros.Add("A Materia precisa ser informado");
-            if (string.IsNullOrEmpty(Descricao))
-                erros.Add("A Descricao precisa ser informado");
             return erros.ToArray();
         }
     }

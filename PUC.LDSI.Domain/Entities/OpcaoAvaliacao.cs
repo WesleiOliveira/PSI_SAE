@@ -16,9 +16,10 @@ namespace PUC.LDSI.Domain.Entities
             var erros = new List<string>();
 
             if (QuestaoId == 0)
-                erros.Add("A Questão Precisa ser informado");
+                erros.Add("A questão precisa ser informada!");
             if (string.IsNullOrEmpty(Descricao))
-                erros.Add("A Descricao precisa ser informado");
+                erros.Add("A descrição precisa ser informada!");
+
             return erros.ToArray();
         }
     }

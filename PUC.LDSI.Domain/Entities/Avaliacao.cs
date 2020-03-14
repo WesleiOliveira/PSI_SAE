@@ -18,13 +18,14 @@ namespace PUC.LDSI.Domain.Entities
             var erros = new List<string>();
 
             if (ProfessorId == 0)
-                erros.Add("O Professor Precisa ser informado");
+                erros.Add("O professor precisa ser informado!");
             if (string.IsNullOrEmpty(Disciplina))
-                erros.Add("A Disciplina precisa ser informado");
+                erros.Add("A disciplina precisa ser informada!");
             if (string.IsNullOrEmpty(Materia))
-                erros.Add("A Materia precisa ser informado");
+                erros.Add("A materia precisa ser informada!");
             if (string.IsNullOrEmpty(Descricao))
-                erros.Add("A Descricao precisa ser informado");
+                erros.Add("A descricao precisa ser informada!");
+
             return erros.ToArray();
         }
     }
