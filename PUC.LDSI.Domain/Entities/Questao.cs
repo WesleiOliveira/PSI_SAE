@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class Professor : Entity
+    public class Questao : Entity
     {
-        public Professor() { }
+        public Questao() { }
        
 
         public int Id { get; set; }
