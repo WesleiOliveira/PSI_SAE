@@ -12,6 +12,10 @@ namespace PUC.LDSI.DataBase
         //DbSets - example
         //public DbSet<EntityName> EntityName { get; set; }
 
+        public DbSet<Aluno> Aluno { get; set; }
+        public DbSet<Avaliacao> Avaliacao { get; set; }
+        public DbSet<Professor> Professor { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
