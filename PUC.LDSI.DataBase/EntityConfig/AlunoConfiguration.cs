@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PUC.LDSI.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PUC.LDSI.DataBase.EntityConfig
 {
@@ -11,10 +8,12 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Aluno> builder)
         {
-            builder.Property(x => x.Nome).IsRequired(); // Campo NOT NULL
-            builder.Property(x => x.Nome).HasColumnType("varchar(100)"); // Tipo de dados e precisão
-            builder.HasOne(x => x.Turma).WithMany(x => x.Alunos).HasForeignKey(x => x.TurmaId); // FK
-            new EntityConfig(); // Aplica as configurações dos atributos
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).UseSqlServerIdentityColumn().IsRequired();
+            builder.Property(x => x.Nome).IsRequired().HasColumnType("varchar(100)");
+            builder.Property(x => x.TurmaId).IsRequired().HasColumnType("int");
+            builder.Property(x => x.DataCriacao).IsRequired().HasColumnType("date");
+            new AlunoConfiguration();
         }
     }
 }
