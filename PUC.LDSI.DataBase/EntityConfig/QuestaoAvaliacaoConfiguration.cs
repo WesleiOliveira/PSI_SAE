@@ -4,7 +4,7 @@ using PUC.LDSI.Domain.Entities;
 
 namespace PUC.LDSI.DataBase.EntityConfig
 {
-    public class QuestaoConfiguration : IEntityTypeConfiguration<QuestaoAvaliacao>
+    public class QuestaoAvaliacaoConfiguration : IEntityTypeConfiguration<QuestaoAvaliacao>
     {
         public void Configure(EntityTypeBuilder<QuestaoAvaliacao> builder)
         {

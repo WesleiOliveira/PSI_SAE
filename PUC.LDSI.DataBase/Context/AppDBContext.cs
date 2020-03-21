@@ -15,24 +15,14 @@ namespace PUC.LDSI.DataBase
         public DbSet<Aluno> Aluno { get; set; }
         public DbSet<Avaliacao> Avaliacao { get; set; }
         public DbSet<Professor> Professor { get; set; }
-       
-        public DbSet<Questao> Questao { get; set; }
-
+        public DbSet<QuestaoAvaliacao> Questao { get; set; }
         public DbSet<Publicacao> Publicacao { get; set; }
         public DbSet<OpcaoAvaliacao> OpcaoAvaliacao { get; set; }
-                       
         public DbSet<Prova> Prova { get; set; }
-
         public DbSet<QuestaoProva> QuestaoProva { get; set; }
-        
         public DbSet<Turma> Turma { get; set; }
-
         public DbSet<OpcaoProva> OpcaoProva { get; set; }
-
-
-
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             foreach (var relationship in modelbuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
@@ -46,7 +36,7 @@ namespace PUC.LDSI.DataBase
             modelbuilder.ApplyConfiguration(new AlunoConfiguration());
             modelbuilder.ApplyConfiguration(new AvaliacaoConfiguration());
             modelbuilder.ApplyConfiguration(new ProfessorConfiguration());
-            modelbuilder.ApplyConfiguration(new QuestaoConfiguration());
+            modelbuilder.ApplyConfiguration(new QuestaoAvaliacaoConfiguration());
             modelbuilder.ApplyConfiguration(new OpcaoAvaliacaoConfiguration());
             modelbuilder.ApplyConfiguration(new PublicacaoConfiguration());
             modelbuilder.ApplyConfiguration(new ProvaConfiguration());
