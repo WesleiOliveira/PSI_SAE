@@ -14,7 +14,7 @@ namespace PUC.LDSI.Domain.Entities
         public Professor Professor { get; set; }
         public List<Prova> Provas { get; set; }
         public List<Publicacao> Publicacoes { get; set; }
-        public List<Questao> Questaos { get; set; }
+        public List<QuestaoAvaliacao> QuestoesAvaliacao { get; set; }
 
         public override string[] Validate()
         {
