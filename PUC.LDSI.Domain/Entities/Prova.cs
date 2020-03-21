@@ -12,6 +12,11 @@ namespace PUC.LDSI.Domain.Entities
         public DateTime DataProva { get; set; }
         public Decimal NotaObtida { get; set; }
 
+        public Avaliacao Avaliacao { get; set; }
+        public Aluno Aluno { get; set; }
+        public List<QuestaoProva> QuestaoProvas { get; set; }
+
+
         public override string[] Validate()
         {
             var erros = new List<string>();

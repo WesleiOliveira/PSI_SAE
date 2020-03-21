@@ -8,12 +8,9 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Aluno> builder)
         {
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).UseSqlServerIdentityColumn().IsRequired();
-            builder.Property(x => x.Nome).IsRequired().HasColumnType("varchar(100)");
-            builder.Property(x => x.TurmaId).IsRequired().HasColumnType("int");
-            builder.Property(x => x.DataCriacao).IsRequired().HasColumnType("date");
-            new AlunoConfiguration();
+            builder.Property(x => x.Nome).IsRequired();
+            builder.Property(x => x.Nome).HasColumnType("varchar(100)");
+            builder.HasOne(x => x.Turma).WithMany(x => x.Alunos).HasForeignKey(x => x.TurmaId);
         }
     }
 }

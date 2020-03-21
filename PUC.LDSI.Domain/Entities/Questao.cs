@@ -10,6 +10,9 @@ namespace PUC.LDSI.Domain.Entities
         public int AvaliacaoId { get; set; }
         public int Tipo { get; set; }
         public string Enunciado { get; set; }
+        public Avaliacao Avaliacao { get; set; }
+        public List<OpcaoAvaliacao> opcaos { get; set; }
+        public List<QuestaoProva> QuestaoProvas { get; set; }
         public override string[] Validate()
         {
             var erros = new List<string>();

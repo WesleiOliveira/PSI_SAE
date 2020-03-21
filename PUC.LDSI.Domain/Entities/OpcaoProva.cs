@@ -4,13 +4,14 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class OpcapProva : Entity
+    public class OpcaoProva : Entity
     {
-        public OpcapProva() { }
+        public OpcaoProva() { }
         public int OpcaoAvaliacaoId { get; set; }
         public int QuestaoProvaId { get; set; }
         public bool Resposta { get; set; }
-
+        public OpcaoAvaliacao opcaoAvaliacao { get; set; }
+        public QuestaoProva QuestaoProva { get; set; }
         public override string[] Validate()
         {
             var erros = new List<string>();

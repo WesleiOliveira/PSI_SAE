@@ -9,6 +9,8 @@ namespace PUC.LDSI.Domain.Entities
         public Aluno() { }
         public string Nome { get; set; }
         public int TurmaId { get; set; }
+        public Turma Turma { get; set; }
+        public List<Prova> Provas { get; set; }
          public override string [] Validate()
         {
             var erros = new List<string>();

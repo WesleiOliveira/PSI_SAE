@@ -12,7 +12,7 @@ namespace PUC.LDSI.DataBase.EntityConfig
 
             builder.Property(x => x.Id).UseSqlServerIdentityColumn();
 
-            builder.Property(x => x.DataCriacao).IsRequired().HasColumnType("date");
+            builder.Property(x => x.DataCriacao).IsRequired().HasColumnType("datetime");
         }
     }
 }

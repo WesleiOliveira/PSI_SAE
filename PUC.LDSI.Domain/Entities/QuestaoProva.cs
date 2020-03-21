@@ -9,6 +9,9 @@ namespace PUC.LDSI.Domain.Entities
         public QuestaoProva() { }
         public int QuestaoId { get; set; }
         public int ProvaId { get; set; }
+        public List<OpcaoProva> opcaoProvas { get; set; }
+        public Questao Questao { get; set; }
+        public Prova Prova { get; set; }
         public Decimal Nota { get; set; }
 
         public override string[] Validate()
