@@ -6,7 +6,6 @@ namespace PUC.LDSI.Domain.Entities
 {
     public class Avaliacao : Entity
     {
-        public Avaliacao() { }
         public int ProfessorId { get; set; }
         public string Disciplina { get; set; }
         public string Materia { get; set; }
@@ -14,7 +13,7 @@ namespace PUC.LDSI.Domain.Entities
         public Professor Professor { get; set; }
         public List<Prova> Provas { get; set; }
         public List<Publicacao> Publicacoes { get; set; }
-        public List<QuestaoAvaliacao> QuestoesAvaliacao { get; set; }
+        public List<QuestaoAvaliacao> Questoes { get; set; }
 
         public override string[] Validate()
         {

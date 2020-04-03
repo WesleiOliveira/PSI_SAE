@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PUC.LDSI.Domain.Entities
 {
     public class Turma : Entity
     {
-        public Turma() { }
         public string Nome { get; set; }
         public List<Aluno> Alunos { get; set; }
         public List<Publicacao> Publicacoes { get; set; }
@@ -14,7 +11,7 @@ namespace PUC.LDSI.Domain.Entities
         {
             var erros = new List<string>();
             if (string.IsNullOrEmpty(Nome))
-                erros.Add("O Nome deve ser informada");
+                erros.Add("O Nome da Turma deve ser informada");
             return erros.ToArray();
         }
 

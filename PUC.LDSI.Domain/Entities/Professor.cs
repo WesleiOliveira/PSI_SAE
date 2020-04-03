@@ -6,12 +6,8 @@ namespace PUC.LDSI.Domain.Entities
 {
     public class Professor : Entity
     {
-        public Professor() { }
-     
         public string Nome { get; set; }
-
         public List<Avaliacao> Avaliacoes { get; set; }
-
         public override string[] Validate()
         {
             var erros = new List<string>();

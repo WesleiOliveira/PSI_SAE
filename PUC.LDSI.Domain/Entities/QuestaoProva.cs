@@ -6,10 +6,9 @@ namespace PUC.LDSI.Domain.Entities
 {
     public class QuestaoProva : Entity
     {
-        public QuestaoProva() { }
         public int QuestaoId { get; set; }
         public int ProvaId { get; set; }
-        public List<OpcaoProva> opcaoProvas { get; set; }
+        public List<OpcaoProva> OpcoesProva { get; set; }
         public QuestaoAvaliacao QuestaoAvaliacao { get; set; }
         public Prova Prova { get; set; }
         public Decimal Nota { get; set; }

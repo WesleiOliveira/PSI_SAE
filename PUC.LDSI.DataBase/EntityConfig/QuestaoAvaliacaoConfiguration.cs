@@ -10,7 +10,7 @@ namespace PUC.LDSI.DataBase.EntityConfig
         {
             builder.Property(x => x.Tipo).IsRequired().HasColumnType("int");
             builder.Property(x => x.Enunciado).IsRequired().HasColumnType("varchar(100)");
-            builder.HasOne(x => x.Avaliacao).WithMany(x => x.QuestoesAvaliacao).HasForeignKey(x => x.AvaliacaoId);
+            builder.HasOne(x => x.Avaliacao).WithMany(x => x.Questoes).HasForeignKey(x => x.AvaliacaoId);
         }
     }
 }

@@ -5,8 +5,7 @@ using System.Text;
 namespace PUC.LDSI.Domain.Entities
 {
     public class Aluno : Entity
-    {
-        public Aluno() { }
+    { 
         public string Nome { get; set; }
         public int TurmaId { get; set; }
         public Turma Turma { get; set; }
