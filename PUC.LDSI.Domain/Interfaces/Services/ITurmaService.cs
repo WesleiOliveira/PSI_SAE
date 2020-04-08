@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-
 namespace PUC.LDSI.Domain.Interfaces.Services
 {
     public interface ITurmaService

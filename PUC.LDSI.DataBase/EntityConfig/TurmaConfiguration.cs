@@ -8,7 +8,9 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Turma> builder)
         {
-            builder.Property(x => x.Nome).IsRequired().HasColumnType("varchar");
+            new EntityConfiguration();
+
+            builder.Property(x => x.Nome).IsRequired().HasColumnType("varchar(100)");
         }
     }
 }

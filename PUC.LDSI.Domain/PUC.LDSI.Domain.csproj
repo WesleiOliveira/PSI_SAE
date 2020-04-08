@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Interfaces\Services\" />
     <Folder Include="QueryResult\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

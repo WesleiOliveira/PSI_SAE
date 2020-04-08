@@ -8,7 +8,9 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Professor> builder)
         {
-            builder.Property(x => x.Nome).IsRequired().HasColumnType("varcha(100)");
+            builder.Property(x => x.Nome).IsRequired().HasColumnType("varchar(100)");
+
+            new EntityConfiguration();
         }
     }
 }
