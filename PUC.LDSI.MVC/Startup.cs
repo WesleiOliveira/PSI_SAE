@@ -35,6 +35,8 @@ namespace PUC.LDSI.MVC
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            AutoMapperConfig.RegisterMappings();
+
             NativeBootStrapperBase.RegisterServices(services);
         }
 
