@@ -7,7 +7,7 @@ namespace PUC.LDSI.Domain.Interfaces.Services
 {
     public interface IQuestaoAvaliacao
     {
-        Task<int> AdicionarQuestaoAvaliacaoAsync(string descricao);
+        Task<int> AdicionarQuestaoAvaliacaoAsync(int avaliacaoId, int tipo, string enunciado);
         Task<int> AlterarQuestaoAvaliacaoAsync(int id, string descricao);
         List<Turma> ListarQuestoesAvaliacao();
         Task<Turma> ObterAsync(int id);

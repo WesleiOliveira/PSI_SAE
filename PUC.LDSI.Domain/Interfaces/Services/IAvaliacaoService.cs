@@ -13,8 +13,8 @@ namespace PUC.LDSI.Domain.Interfaces.Services
         Task<int> AlterarAvaliacaoAsync(int id, string disciplina, string materia, string descricao);
         Task<int> AlterarQuestaoAvaliacaoAsync(int id, int tipo, string enunciado);
         Task<int> AlterarOpcaoAvaliacaoAsync(int id, string descricao, bool verdadeira);
-        Task<int> ExcluirAvaliacaoAsync(int id);
-        Task<int> ExcluirQuestaoAvaliacaoAsync(int id);
-        Task<int> ExcluirOpcaoAvaliacaoAsync(int id);
+        Task ExcluirAvaliacaoAsync(int id);
+        Task ExcluirQuestaoAvaliacaoAsync(int id);
+        Task ExcluirOpcaoAvaliacaoAsync(int id);
     }
 }
