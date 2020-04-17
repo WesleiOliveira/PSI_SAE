@@ -15,6 +15,7 @@ namespace PUC.LDSI.Domain.Entities
 
         public override string[] Validate()
         {
+
             throw new NotImplementedException();
         }
     }
