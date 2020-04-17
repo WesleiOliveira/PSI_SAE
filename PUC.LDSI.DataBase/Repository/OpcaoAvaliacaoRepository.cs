@@ -20,9 +20,10 @@ namespace PUC.LDSI.DataBase.Repository
         {
             var opcaoAvaliacao = await _context.OpcaoAvaliacao
                     .Include(x => x.OpcoesProva)
+                    .Include(x => x.Questao)
+                        .ThenInclude(x => x.Avaliacao)
                     .Where(x => x.Id == id).FirstOrDefaultAsync();
             return opcaoAvaliacao;
         }
     }
-}
 }

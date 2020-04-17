@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PUC.LDSI.Domain.Entities;
@@ -18,10 +19,19 @@ namespace PUC.LDSI.DataBase.Repository
         public override async Task<Avaliacao> ObterAsync(int id)
         {
             var avaliacao = await _context.Avaliacao
-                    .Include(x => x.Professor)
-                    .Include(x => x.Questoes)
-                        .ThenInclude(x => x.Opcoes).Where(x => x.Id == id).FirstOrDefaultAsync();
+                                                .Include(x => x.Professor)
+                                                .Include(x => x.Questoes)
+                                                    .ThenInclude(x => x.Opcoes)
+                                                .Include(x => x.Publicacoes)
+                                                .Where(x => x.Id == id).FirstOrDefaultAsync();
             return avaliacao;
+        }
+
+        public async Task<List<Avaliacao>> ListarAvaliacoesDoProfessorAsync(int professorId)
+        {
+            IQueryable<Avaliacao> avaliacao = _context.Avaliacao.Where(x => x.ProfessorId == professorId);
+
+            return await avaliacao.ToListAsync();
         }
     }
 }
