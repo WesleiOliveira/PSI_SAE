@@ -18,8 +18,10 @@ namespace PUC.LDSI.MVC.Controllers
     {
         private readonly ITurmaAppService _turmaAppService;
         private readonly ITurmaRepository _turmaRepository;
+            
 
-        public TurmaController(ITurmaAppService turmaAppService, ITurmaRepository turmaRepository)
+        public TurmaController(ITurmaAppService turmaAppService, 
+                               ITurmaRepository turmaRepository)
         {
             _turmaAppService = turmaAppService;
             _turmaRepository = turmaRepository;
