@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PUC.LDSI.DataBase;
 using PUC.LDSI.IoC;
+using PUC.LDSI.MVC.AutoMapper;
 
 namespace PUC.LDSI.MVC
 {
@@ -33,7 +34,8 @@ namespace PUC.LDSI.MVC
                 o => o.UseSqlServer(Configuration.GetConnectionString("Conexao"),
                 x => x.MigrationsAssembly("PUC.LDSI.DataBase")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddMvc();
 
             AutoMapperConfig.RegisterMappings();
 

@@ -73,6 +73,7 @@ namespace PUC.LDSI.Application.AppServices
             }
 
         }
+
         public Task<DataResult<int>> AlterarQuestaoAvaliacaoAsync(int id, int tipo, string enunciado)
         {
             throw new NotImplementedException();
@@ -91,8 +92,6 @@ namespace PUC.LDSI.Application.AppServices
             }
         }
 
-        
-
         public async Task<DataResult<int>> ExcluirAvaliacaoAsync(int id)
         {
             try
@@ -106,6 +105,7 @@ namespace PUC.LDSI.Application.AppServices
                 return new DataResult<int>(ex);
             }
         }
+
         public async Task<DataResult<int>> ExcluirQuestaoAvaliacaoAsync(int id)
         {
             try
