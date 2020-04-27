@@ -6,5 +6,7 @@ namespace PUC.LDSI.Identity.Entities
     {
         [PersonalData]
         public int IntegrationId { get; set; }
+        [PersonalData]
+        public int UserType { get; set; }
     }
 }
