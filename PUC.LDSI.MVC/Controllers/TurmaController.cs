@@ -16,7 +16,7 @@ using PUC.LDSI.Identity.Entities;
 
 namespace PUC.LDSI.MVC.Controllers
 {
-    public class TurmaController : Controller
+    public class TurmaController : BaseController
     {
         private readonly ITurmaAppService _turmaAppService;
         private readonly ITurmaRepository _turmaRepository;
@@ -24,12 +24,11 @@ namespace PUC.LDSI.MVC.Controllers
 
         public TurmaController(UserManager<Usuario> user,
                        ITurmaAppService turmaAppService,
-                       ITurmaRepository turmaRepository) : base()
+                       ITurmaRepository turmaRepository) : base(user)
         {
             _turmaAppService = turmaAppService;
             _turmaRepository = turmaRepository;
         }
-
         // GET: Turma
         public async Task<IActionResult> Index()
         {

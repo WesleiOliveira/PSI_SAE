@@ -99,5 +99,10 @@ namespace PUC.LDSI.Application.AppServices
                 return new DataResult<int>(ex);
             }
         }
+
+        public Task<DataResult<int>> IncluirProfessorAsync(string nome)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
