@@ -1,0 +1,33 @@
+﻿@model OpcaoAvaliacaoViewModel
+@{
+    ViewData["Title"] = "Nova Opção";
+}
+@ViewData["OpcoesTipo"] = ObterOpcoesTipo();
+<h2>Nova Opção</h2>
+<h4>@Html.DisplayNameFor(model => model.Questao.Avaliacao.Disciplina) / @Html.DisplayNameFor(model => model.Questao.Avaliacao.Materia) / @Html.DisplayNameFor(model => model.Questao.Avaliacao.Descricao)</h4>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <select asp-for="Descricao" class="form-control" asp-items="ViewBag.OpcoesTipo"></select>
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Verdadeira" class="control-label"></label>
+                <input asp-for="Verdadeira" type="checkbox" class="form-control" />
+                <span asp-validation-for="Verdadeira" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-default" />
+                <a asp-action="Index" class="btn btn-default">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

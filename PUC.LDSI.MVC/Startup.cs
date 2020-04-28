@@ -34,7 +34,8 @@ namespace PUC.LDSI.MVC
                 o => o.UseSqlServer(Configuration.GetConnectionString("Conexao"),
                 x => x.MigrationsAssembly("PUC.LDSI.DataBase")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddMvc();
 
             AutoMapperConfig.RegisterMappings();
 
