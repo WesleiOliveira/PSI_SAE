@@ -11,6 +11,8 @@ using PUC.LDSI.Domain.Interfaces.Repository;
 using PUC.LDSI.Application.Interfaces;
 using AutoMapper;
 using PUC.LDSI.MVC.Models;
+using Microsoft.AspNetCore.Identity;
+using PUC.LDSI.Identity.Entities;
 
 namespace PUC.LDSI.MVC.Controllers
 {
@@ -18,10 +20,11 @@ namespace PUC.LDSI.MVC.Controllers
     {
         private readonly ITurmaAppService _turmaAppService;
         private readonly ITurmaRepository _turmaRepository;
-            
 
-        public TurmaController(ITurmaAppService turmaAppService, 
-                               ITurmaRepository turmaRepository)
+
+        public TurmaController(UserManager<Usuario> user,
+                       ITurmaAppService turmaAppService,
+                       ITurmaRepository turmaRepository) : base()
         {
             _turmaAppService = turmaAppService;
             _turmaRepository = turmaRepository;

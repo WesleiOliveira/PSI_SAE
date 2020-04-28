@@ -26,10 +26,10 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
         private readonly UserManager<Usuario> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
         private readonly IProfessorAppService _professorAppService;
         private readonly ITurmaRepository _turmaRepository;
         private readonly ITurmaAppService _turmaAppService;
+
 
         public RegisterModel(
             UserManager<Usuario> userManager,
