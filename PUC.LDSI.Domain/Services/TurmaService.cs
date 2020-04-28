@@ -11,16 +11,8 @@ namespace PUC.LDSI.Domain.Services
     public class TurmaService : ITurmaService
     {
         private readonly ITurmaRepository _turmaRepository;
-
-        public ProfessorService(IProfessorRepository professorRepository)
-        {
-            _professorRepository = professorRepository;
-        }
-
-        public AlunoService(IAlunoRepository alunoRepository)
-        {
-            _alunoRepository = alunoRepository;
-        }
+        private readonly IAlunoRepository _alunoRepository;
+        private readonly IProfessorRepository _professorRepository;
 
         public TurmaService(ITurmaRepository turmaRepository)
         {

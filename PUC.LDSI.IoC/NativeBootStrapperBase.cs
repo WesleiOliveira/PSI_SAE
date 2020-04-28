@@ -10,6 +10,8 @@ namespace PUC.LDSI.IoC
 {
     public abstract class NativeBootStrapperBase
     {
+        public readonly IAlunoRepository AlunoRepository;
+        public readonly IProfessorRepository ProfessorRepository;
         public static void RegisterServices(IServiceCollection services) {
             
             services.AddScoped<IAlunoRepository, AlunoRepository>();
