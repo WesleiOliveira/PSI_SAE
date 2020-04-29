@@ -20,7 +20,7 @@ namespace PUC.LDSI.MVC.Areas.Identity
                 services.AddDbContext<SecurityContext>(
                     opc => opc.UseSqlServer(context.Configuration.GetConnectionString("ConexaoIdentity"),
                     prj => prj.MigrationsAssembly("PUC.LDSI.Identity")));
-
+                services.AddDefaultIdentity<Usuario>().AddEntityFrameworkStores<SecurityContext>();
                 services.Configure<IdentityOptions>(options =>
                 {
                     options.Password.RequireDigit = false;
