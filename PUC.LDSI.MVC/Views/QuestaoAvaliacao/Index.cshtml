@@ -1,0 +1,41 @@
+﻿@model  AvaliacaoViewModel
+@{
+    ViewData["Title"] = "Avaliações";
+}
+<h2>Avaliação</h2>
+<h4>@Html.DisplayNameFor(model => model.Disciplina) / @Html.DisplayNameFor(model => model.Materia) / @Html.DisplayNameFor(model => model.Descricao)</h4>
+<p>
+    <a asp-action="Create" class="btn btn-default">Nova Questão</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Tipo</th>
+            <th>Enunciado</th>
+            <th>N° Opções</th>
+            <th>Ações</th>
+            <th>Válida</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Questoes)
+        {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Id)</td>
+            <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+            <td>@Html.DisplayFor(modelItem => item.Enunciado)</td>
+            <td>@Html.DisplayFor(modelItem => item.Opcoes)</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit" title="Editar Avaliação"></i></a>&nbsp;
+                <a asp-action="Index" asp-controller="QuestaoAvaliacao" asp-route-avaliacaoId="@item.Id"><i class="fas fa-tools" title="Construir Avaliação"></i></a>&nbsp;
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt" title="Excluir Avaliação"></i></a>&nbsp;
+            </td>
+            <td style="@(item.Avaliacao.EhValida ? "color:green" : "color:red")">
+                <i class="@(item.Avaliacao.EhValida ? "fas fa-check" : "fas fa-times")"
+                   title="@(item.Avaliacao.EhValida ? "Avaliação OK" : "Esta avaliação possui pendências a resolver!")"></i>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

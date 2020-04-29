@@ -90,7 +90,7 @@ namespace PUC.LDSI.Application.AppServices
         {
             try
             {
-                var retorno = await _turmaService.IncluirAlunoAsync(int turmaId, string nomeAluno);
+                var retorno = await _turmaService.IncluirAlunoAsync(turmaId, nomeAluno);
 
                 return new DataResult<int>(retorno);
             }
@@ -98,6 +98,11 @@ namespace PUC.LDSI.Application.AppServices
             {
                 return new DataResult<int>(ex);
             }
+        }
+
+        public Task<DataResult<int>> IncluirProfessorAsync(string nome)
+        {
+            throw new NotImplementedException();
         }
     }
 }

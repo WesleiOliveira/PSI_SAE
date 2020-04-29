@@ -5,13 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PUC.LDSI.DataBase\PUC.LDSI.DataBase.csproj" />
-    <ProjectReference Include="..\PUC.LDSI.Domain\PUC.LDSI.Domain.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AppServices\" />
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\PUC.LDSI.DataBase\PUC.LDSI.DataBase.csproj" />
+    <ProjectReference Include="..\PUC.LDSI.Domain\PUC.LDSI.Domain.csproj" />
   </ItemGroup>
 
 </Project>
