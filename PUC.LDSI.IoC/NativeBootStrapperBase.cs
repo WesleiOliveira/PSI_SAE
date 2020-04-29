@@ -14,6 +14,7 @@ namespace PUC.LDSI.IoC
         {
             //Application
             services.AddScoped<ITurmaAppService, TurmaAppService>();
+            services.AddScoped<IProfessorAppService, ProfessorAppService>();
 
 
 
