@@ -10,14 +10,10 @@ namespace PUC.LDSI.Application.AppServices
     public class AvaliacaoAppService : IAvaliacaoAppService
     {
         private readonly IAvaliacaoService _avaliacaoService;
-        private readonly IQuestaoAvaliacao _questaoAvaliacao;
-        private readonly IOpcaoAvaliacao _opcaoAvaliacao;
 
-        public AvaliacaoAppService(IAvaliacaoService avaliacaoService, IQuestaoAvaliacao questaoAvaliacao, IOpcaoAvaliacao opcaoAvaliacao)
+        public AvaliacaoAppService(IAvaliacaoService avaliacaoService)
         {
             _avaliacaoService = avaliacaoService;
-            _questaoAvaliacao = questaoAvaliacao;
-            _opcaoAvaliacao = opcaoAvaliacao;
         }
 
         public async Task<DataResult<int>> AdicionarAvaliacaoAsync(int professorId, string disciplina, string materia, string descricao)
@@ -38,7 +34,7 @@ namespace PUC.LDSI.Application.AppServices
         {
             try
             {
-                var retorno = await _questaoAvaliacao.AdicionarQuestaoAvaliacaoAsync(avaliacaoId,tipo,enunciado);
+                var retorno = await _avaliacaoService.AdicionarQuestaoAvaliacaoAsync(avaliacaoId,tipo,enunciado);
                 return new DataResult<int>(retorno);
             }
             catch (Exception ex)
@@ -51,7 +47,7 @@ namespace PUC.LDSI.Application.AppServices
         {
             try
             {
-                var retorno = await _opcaoAvaliacao.AdicionarOpcaoAvaliacaoAsync(questaoId, descricao, verdadeira);
+                var retorno = await _avaliacaoService.AdicionarOpcaoAvaliacaoAsync(questaoId, descricao, verdadeira);
                 return new DataResult<int>(retorno);
             }
             catch (Exception ex)
@@ -83,7 +79,7 @@ namespace PUC.LDSI.Application.AppServices
         {
             try
             {
-                var retorno = await _opcaoAvaliacao.AlterarOpcaoAvaliacaoAsync(id,descricao,verdadeira);
+                var retorno = await _avaliacaoService.AlterarOpcaoAvaliacaoAsync(id,descricao,verdadeira);
                 return new DataResult<int>(retorno);
             }
             catch (Exception ex)
@@ -110,7 +106,7 @@ namespace PUC.LDSI.Application.AppServices
         {
             try
             {
-                await _questaoAvaliacao.ExcluirAsync(id);
+                await _avaliacaoService.ExcluirQuestaoAvaliacaoAsync(id);
 
                 return new DataResult<int>(1);
             }
@@ -124,7 +120,7 @@ namespace PUC.LDSI.Application.AppServices
         {
             try
             {
-                await _opcaoAvaliacao.ExcluirAsync(id);
+                await _avaliacaoService.ExcluirOpcaoAvaliacaoAsync(id);
 
                 return new DataResult<int>(1);
             }
