@@ -12,11 +12,11 @@ namespace PUC.LDSI.Domain.Services
     {
         private readonly ITurmaRepository _turmaRepository;
         private readonly IAlunoRepository _alunoRepository;
-        private readonly IProfessorRepository _professorRepository;
 
-        public TurmaService(ITurmaRepository turmaRepository)
+        public TurmaService(ITurmaRepository turmaRepository, IAlunoRepository alunoRepository)
         {
             _turmaRepository = turmaRepository;
+            _alunoRepository = alunoRepository;
         }
 
         public async Task<int> AdicionarTurmaAsync(string descricao)
@@ -96,21 +96,5 @@ namespace PUC.LDSI.Domain.Services
             else throw new DomainException(erros);
         }
 
-        public async Task<int> IncluirProfessorAsync(string nome)
-        {
-            var professor = new Professor() { Nome = nome };
-
-            var erros = professor.Validate();
-
-            if (erros.Length == 0)
-            {
-                await _professorRepository.AdicionarAsync(professor);
-
-                _professorRepository.SaveChanges();
-
-                return professor.Id;
-            }
-            else throw new DomainException(erros);
-        }
     }
 }

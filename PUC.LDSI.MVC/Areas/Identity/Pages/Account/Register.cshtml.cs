@@ -48,6 +48,7 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             _professorAppService = professorAppService;
             _turmaRepository = turmaRepository;
             _turmaRepository = turmaRepository;
+            _turmaAppService = turmaAppService;
 
         }
 
