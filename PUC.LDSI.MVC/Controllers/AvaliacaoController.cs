@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using PUC.LDSI.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using PUC.LDSI.DataBase;
 using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.Domain.Interfaces.Repository;
-using PUC.LDSI.Identity.Entities;
+using PUC.LDSI.Application.Interfaces;
+using AutoMapper;
 using PUC.LDSI.MVC.Models;
+using Microsoft.AspNetCore.Identity;
+using PUC.LDSI.Identity.Entities;
 
 namespace PUC.LDSI.MVC.Controllers
 {
@@ -26,7 +29,7 @@ namespace PUC.LDSI.MVC.Controllers
             _avaliacaoRepository = avalicaoRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var result = _avaliacaoRepository.ObterTodos();
 

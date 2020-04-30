@@ -14,9 +14,10 @@ namespace PUC.LDSI.Domain.Services
         private readonly IAlunoRepository _alunoRepository;
         private readonly IProfessorRepository _professorRepository;
 
-        public TurmaService(ITurmaRepository turmaRepository)
+        public TurmaService(ITurmaRepository turmaRepository, IAlunoRepository alunoRepository)
         {
             _turmaRepository = turmaRepository;
+            _alunoRepository = alunoRepository;
         }
 
         public async Task<int> AdicionarTurmaAsync(string descricao)
@@ -79,9 +80,9 @@ namespace PUC.LDSI.Domain.Services
             return turma;
         }
 
-        public async Task<int> IncluirAlunoAsync(int turmaId, string nomeAluno)
+        public async Task<int> IncluirAlunoAsync(int turmaId, string nomeAluno, Turma turma)
         {
-            var aluno = new Aluno() { Nome = nomeAluno, TurmaId = turmaId};
+            var aluno = new Aluno() { Nome = nomeAluno, TurmaId = turmaId, Turma = turma};
 
             var erros = aluno.Validate();
 

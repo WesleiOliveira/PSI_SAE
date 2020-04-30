@@ -90,7 +90,8 @@ namespace PUC.LDSI.Application.AppServices
         {
             try
             {
-                var retorno = await _turmaService.IncluirAlunoAsync(turmaId, nomeAluno);
+                var turma = await _turmaService.ObterAsync(turmaId);
+                var retorno = await _turmaService.IncluirAlunoAsync(turmaId, nomeAluno, turma);
 
                 return new DataResult<int>(retorno);
             }

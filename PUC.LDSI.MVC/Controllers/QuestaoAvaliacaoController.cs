@@ -17,21 +17,25 @@ namespace PUC.LDSI.MVC.Controllers
     public class QuestaoAvaliacaoController : BaseController
     {
         private readonly IAvaliacaoAppService _avalicaoAppService;
-        private readonly IAvaliacaoRepository _avaliacaoRepository;
+        //private readonly IAvaliacaoRepository _avaliacaoRepository;
         private readonly IQuestaoAvaliacaoRepository _questaoAvaliacaoRepository;
-        private readonly IOpcaoAvaliacaoRepository _opcaoAvalicaoRepository;
+        //private readonly IOpcaoAvaliacaoRepository _opcaoAvalicaoRepository;
 
         public QuestaoAvaliacaoController(UserManager<Usuario> user,
                         IAvaliacaoAppService avalicaoAppService,
-                        IAvaliacaoRepository avalicaoRepository) : base(user)
+                        //IAvaliacaoRepository avalicaoRepository,
+                        IQuestaoAvaliacaoRepository questaoAvaliacaoRepository,
+                        IOpcaoAvaliacaoRepository opcaoAvaliacaoRepository) : base(user)
         {
             _avalicaoAppService = avalicaoAppService;
-            _avaliacaoRepository = avalicaoRepository;
+            //_avaliacaoRepository = avalicaoRepository;
+            _questaoAvaliacaoRepository = questaoAvaliacaoRepository;
+            //_opcaoAvalicaoRepository = opcaoAvaliacaoRepository;
         }
 
         public IActionResult Index()
         {
-            var result = _avaliacaoRepository.ObterTodos();
+            var result = _questaoAvaliacaoRepository.ObterTodos();
 
             var questoes = Mapper.Map<List<QuestaoAvaliacaoViewModel>>(result.ToList());
 
@@ -41,6 +45,7 @@ namespace PUC.LDSI.MVC.Controllers
         // GET: Turma/Create
         public IActionResult Create()
         {
+            ViewData["OpcoesTipo"] = ObterOpcoesTipo();
             return View();
         }
 
@@ -70,6 +75,7 @@ namespace PUC.LDSI.MVC.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -91,6 +97,7 @@ namespace PUC.LDSI.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Nome,Id")] QuestaoAvaliacaoViewModel questao)
         {
+            ViewData["OpcoesTipo"] = ObterOpcoesTipo(questao.Tipo);
             if (id != questao.Id)
             {
                 return NotFound();

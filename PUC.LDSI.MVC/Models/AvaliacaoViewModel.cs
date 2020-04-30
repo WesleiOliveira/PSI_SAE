@@ -37,17 +37,18 @@ namespace PUC.LDSI.MVC.Models
         {
             get
             {
-                foreach (QuestaoAvaliacaoViewModel questao in Questoes)
+                if (Questoes == null) { return false; }
+                if (Questoes.Count == 0)
+                    return false;
+                foreach (QuestaoAvaliacaoViewModel item in Questoes)
                 {
-                    if (questao.Erro.Length > 0)
-                    {
+                    if (!item.Erro.Equals(""))
                         return false;
-                    }
                 }
                 return true;
             }
-            set { }
         }
+
 
 
     }

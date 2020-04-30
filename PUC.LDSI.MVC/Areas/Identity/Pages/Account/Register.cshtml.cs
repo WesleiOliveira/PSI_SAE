@@ -37,8 +37,8 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             IProfessorAppService professorAppService,
-            ITurmaRepository turmaRepository,
-            ITurmaAppService turmaAppService
+            ITurmaAppService turmaAppService,
+            ITurmaRepository turmaRepository
             )
         {
             _userManager = userManager;
@@ -48,6 +48,7 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             _professorAppService = professorAppService;
             _turmaRepository = turmaRepository;
             _turmaRepository = turmaRepository;
+            _turmaAppService = turmaAppService;
 
         }
 

@@ -1,9 +1,9 @@
-﻿@model  AvaliacaoViewModel
+﻿@model  IEnumerable<QuestaoAvaliacaoViewModel>
 @{
-    ViewData["Title"] = "Avaliações";
+    ViewData["Title"] = "Questão avaliação";
 }
-<h2>Avaliação</h2>
-<h4>@Html.DisplayNameFor(model => model.Disciplina) / @Html.DisplayNameFor(model => model.Materia) / @Html.DisplayNameFor(model => model.Descricao)</h4>
+<h2>Questão avaliação</h2>
+<h4>@Html.DisplayNameFor(model => model.Avaliacao.Disciplina) / @Html.DisplayNameFor(model => model.Avaliacao.Materia) / @Html.DisplayNameFor(model => model.Avaliacao.Descricao)</h4>
 <p>
     <a asp-action="Create" class="btn btn-default">Nova Questão</a>
 </p>
@@ -19,7 +19,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Questoes)
+        @foreach (var item in Model)
         {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Id)</td>

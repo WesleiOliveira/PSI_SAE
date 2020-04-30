@@ -13,7 +13,7 @@ namespace PUC.LDSI.Domain.Interfaces.Services
         Task<Turma> ObterAsync(int id);
         Task ExcluirAsync(int id);
 
-        Task<int> IncluirAlunoAsync(int turmaId, string nomeAluno);
+        Task<int> IncluirAlunoAsync(int turmaId, string nomeAluno, Turma turma);
         Task<int> IncluirProfessorAsync(string nome);
     }
 }
