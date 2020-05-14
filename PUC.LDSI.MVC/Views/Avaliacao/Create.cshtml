@@ -1,8 +1,11 @@
 ﻿@model AvaliacaoViewModel
+
 @{
     ViewData["Title"] = "Cadastro de Avaliações";
 }
+
 <h2>Incluir Nova Avaliação</h2>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -30,6 +33,8 @@
         </form>
     </div>
 </div>
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

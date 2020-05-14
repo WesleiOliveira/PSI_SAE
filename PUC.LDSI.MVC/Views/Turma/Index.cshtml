@@ -5,6 +5,7 @@
 }
 
 <h2>@ViewData["Title"]</h2>
+
 <p>
     <a asp-action="Create" class="btn btn-default">Criar Nova Turma</a>
 </p>
@@ -20,15 +21,15 @@
     <tbody>
         @foreach (var item in Model)
         {
-         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit" title="Editar Turma"></i></a>&nbsp;
-                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt" title="Excluir Turma"></i></a>&nbsp;
-            </td>
-         </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit" title="Editar Questão"></i></a>&nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt" title="Excluir Questão"></i></a>&nbsp;
+                </td>
+            </tr>
         }
     </tbody>
 </table>

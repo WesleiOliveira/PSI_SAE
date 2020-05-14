@@ -1,21 +1,31 @@
 ﻿@model AvaliacaoViewModel
 
 @{
-    ViewData["Title"] = "Exclusão de Avaliação";
+    ViewData["Title"] = "Excluir Avaliação";
 }
 
-<h3>Confirma a exclusão dessa avaliação?</h3>
+<h2>@ViewData["Title"]</h2>
+
+<h3>Confirma a exclusão desta avaliação?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Disciplina)
-            @Html.DisplayNameFor(model => model.Materia)
-            @Html.DisplayNameFor(model => model.Descricao)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Disciplina)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Materia)
+        </dt>
+        <dd>
             @Html.DisplayFor(model => model.Materia)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd>
             @Html.DisplayFor(model => model.Descricao)
         </dd>
     </dl>

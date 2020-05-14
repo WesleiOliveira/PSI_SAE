@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PUC.LDSI.MVC.Models
 {
     public class AvaliacaoViewModel
     {
-        [Key]
         public int Id { get; set; }
 
         [DisplayName("Professor")]
@@ -30,25 +27,14 @@ namespace PUC.LDSI.MVC.Models
         [DisplayName("Descrição")]
         public string Descricao { get; set; }
 
-      
         public List<QuestaoAvaliacaoViewModel> Questoes { get; set; }
 
         public bool EhValida
         {
             get
             {
-                foreach (QuestaoAvaliacaoViewModel questao in Questoes)
-                {
-                    if (questao.Erro.Length > 0)
-                    {
-                        return false;
-                    }
-                }
-                return true;
+                return Questoes.Count > 0 && !Questoes.Where(x => x.Erro != string.Empty).Any();
             }
-            set { }
         }
-
-
     }
 }

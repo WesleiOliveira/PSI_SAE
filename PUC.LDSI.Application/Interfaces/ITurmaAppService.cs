@@ -12,5 +12,6 @@ namespace PUC.LDSI.Application.Interfaces
         DataResult<List<Turma>> ListarTurmas();
         Task<DataResult<Turma>> ObterAsync(int id);
         Task<DataResult<int>> ExcluirAsync(int id);
+        Task<DataResult<int>> IncluirAlunoAsync(int turmaId, string nomeAluno);
     }
 }

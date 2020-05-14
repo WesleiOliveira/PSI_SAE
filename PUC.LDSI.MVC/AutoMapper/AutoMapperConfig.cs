@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 
 namespace PUC.LDSI.MVC.AutoMapper
 {
@@ -15,6 +11,5 @@ namespace PUC.LDSI.MVC.AutoMapper
                 cfg.AddProfile<DomainToViewModelMappingProfile>();
             });
         }
-
     }
 }

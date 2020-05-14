@@ -34,12 +34,11 @@ namespace PUC.LDSI.MVC
                 o => o.UseSqlServer(Configuration.GetConnectionString("Conexao"),
                 x => x.MigrationsAssembly("PUC.LDSI.DataBase")));
 
-
-            services.AddMvc();
-
-            AutoMapperConfig.RegisterMappings();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             NativeBootStrapperBase.RegisterServices(services);
+
+            AutoMapperConfig.RegisterMappings();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

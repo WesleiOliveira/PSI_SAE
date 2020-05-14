@@ -10,14 +10,14 @@ using PUC.LDSI.DataBase;
 namespace PUC.LDSI.DataBase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200426025047_Create")]
+    [Migration("20200215122015_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 

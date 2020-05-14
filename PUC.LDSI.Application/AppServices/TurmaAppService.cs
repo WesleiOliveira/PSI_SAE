@@ -85,5 +85,19 @@ namespace PUC.LDSI.Application.AppServices
                 return new DataResult<Turma>(ex);
             }
         }
+
+        public async Task<DataResult<int>> IncluirAlunoAsync(int turmaId, string nomeAluno)
+        {
+            try
+            {
+                var retorno = await _turmaService.IncluirAlunoAsync(turmaId, nomeAluno);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
+        }
     }
 }

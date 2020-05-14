@@ -5,16 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200215122015_Create.cs" />
-    <Compile Remove="Migrations\20200215122015_Create.Designer.cs" />
-    <Compile Remove="Migrations\20200425172613_Create.cs" />
-    <Compile Remove="Migrations\20200425172613_Create.Designer.cs" />
-    <Compile Remove="Migrations\20200425191530_Create.cs" />
-    <Compile Remove="Migrations\20200425191530_Create.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1">
       <PrivateAssets>all</PrivateAssets>
