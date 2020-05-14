@@ -10,30 +10,24 @@ namespace PUC.LDSI.IoC
 {
     public abstract class NativeBootStrapperBase
     {
-        public static void RegisterServices(IServiceCollection services)
-        {
+        public static void RegisterServices(IServiceCollection services) {
             //Application
             services.AddScoped<ITurmaAppService, TurmaAppService>();
             services.AddScoped<IProfessorAppService, ProfessorAppService>();
             services.AddScoped<IAvaliacaoAppService, AvaliacaoAppService>();
-            //services.AddScoped<IQuestaoAvaliacao, AvaliacaoAppService>();
-
 
             //Domain - Repository
             services.AddScoped<ITurmaRepository, TurmaRepository>();
             services.AddScoped<IAlunoRepository, AlunoRepository>();
-            services.AddScoped<IProfessorRepository, ProfessorRepository>();
             services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
-            services.AddScoped<IQuestaoAvaliacaoRepository, QuestaoAvaliacaoRepository>();
             services.AddScoped<IOpcaoAvaliacaoRepository, OpcaoAvaliacaoRepository>();
-
+            services.AddScoped<IProfessorRepository, ProfessorRepository>();
+            services.AddScoped<IQuestaoAvaliacaoRepository, QuestaoAvaliacaoRepository>();
 
             //Domain - Services
             services.AddScoped<ITurmaService, TurmaService>();
             services.AddScoped<IProfessorService, ProfessorService>();
             services.AddScoped<IAvaliacaoService, AvaliacaoService>();
-            //services.AddScoped<IQuestaoAvaliacao, >();
-
         }
     }
 }

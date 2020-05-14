@@ -1,21 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PUC.LDSI.Domain.Exception;
-using PUC.LDSI.Identity.Entities;
 using PUC.LDSI.MVC.Models;
 using System.Diagnostics;
 
 namespace PUC.LDSI.MVC.Controllers
 {
     [AllowAnonymous]
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
-        public HomeController(UserManager<Usuario> user) : base(user)
-        {
-        }
-
         public IActionResult Index()
         {
             return View();

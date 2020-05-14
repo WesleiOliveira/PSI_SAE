@@ -1,44 +1,39 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using PUC.LDSI.Application.Interfaces;
+using PUC.LDSI.Domain.Interfaces.Repository;
+using PUC.LDSI.Identity.Entities;
+using PUC.LDSI.MVC.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PUC.LDSI.DataBase;
-using PUC.LDSI.Domain.Entities;
-using PUC.LDSI.Domain.Interfaces.Repository;
-using PUC.LDSI.Application.Interfaces;
-using AutoMapper;
-using PUC.LDSI.MVC.Models;
-using Microsoft.AspNetCore.Identity;
-using PUC.LDSI.Identity.Entities;
 
 namespace PUC.LDSI.MVC.Controllers
 {
     public class AvaliacaoController : BaseController
     {
-        private readonly IAvaliacaoAppService _avalicaoAppService;
+        private readonly IAvaliacaoAppService _avaliacaoAppService;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
 
         public AvaliacaoController(UserManager<Usuario> user,
-                        IAvaliacaoAppService avalicaoAppService,
-                        IAvaliacaoRepository avalicaoRepository) : base(user)
+                                   IAvaliacaoAppService avaliacaoAppService,
+                                   IAvaliacaoRepository avaliacaoRepository) : base(user)
         {
-            _avalicaoAppService = avalicaoAppService;
-            _avaliacaoRepository = avalicaoRepository;
+            _avaliacaoAppService = avaliacaoAppService;
+
+            _avaliacaoRepository = avaliacaoRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            var result = _avaliacaoRepository.ObterTodos();
+            var result = await _avaliacaoRepository.ListarAvaliacoesDoProfessorAsync(IntegrationUserId);
 
             var avaliacoes = Mapper.Map<List<AvaliacaoViewModel>>(result.ToList());
 
             return View(avaliacoes);
         }
 
-        // GET: Turma/Create
         public IActionResult Create()
         {
             return View();
@@ -46,85 +41,71 @@ namespace PUC.LDSI.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Disciplina,Materia,Descricao,Id")] AvaliacaoViewModel avaliacao)
+        public async Task<IActionResult> Create([Bind("Disciplina,Materia,Descricao")] AvaliacaoViewModel avaliacao)
         {
             if (ModelState.IsValid)
             {
-                var result = await _avalicaoAppService.AdicionarAvaliacaoAsync(1, avaliacao.Disciplina, avaliacao.Materia, avaliacao.Descricao);
+                var result = await _avaliacaoAppService.AdicionarAvaliacaoAsync(IntegrationUserId, avaliacao.Disciplina, avaliacao.Materia, avaliacao.Descricao);
 
                 if (result.Success)
                     return RedirectToAction(nameof(Index));
                 else
                     throw result.Exception;
             }
+
             return View(avaliacao);
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
 
-            var opcao = await _avaliacaoRepository.ObterAsync(id.Value);
+            var result = await _avaliacaoRepository.ObterAsync(id.Value);
 
-            if (opcao == null)
-            {
-                return NotFound();
-            }
+            if (result == null) { return NotFound(); }
 
-            var viewModel = Mapper.Map<AvaliacaoViewModel>(opcao);
+            var avaliacao = Mapper.Map<AvaliacaoViewModel>(result);
 
-            return View(viewModel);
+            return View(avaliacao);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Disciplina,Materia,Descricao,Id")] AvaliacaoViewModel avaliacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Disciplina,Materia,Descricao")] AvaliacaoViewModel avaliacao)
         {
-            if (id != avaliacao.Id)
-            {
-                return NotFound();
-            }
+            if (id != avaliacao.Id) { return NotFound(); }
 
             if (ModelState.IsValid)
             {
-                var result = await _avalicaoAppService.AlterarAvaliacaoAsync(avaliacao.Id, avaliacao.Disciplina, avaliacao.Materia, avaliacao.Descricao);
+                var result = await _avaliacaoAppService.AlterarAvaliacaoAsync(avaliacao.Id, avaliacao.Disciplina, avaliacao.Materia, avaliacao.Descricao);
 
                 if (result.Success)
                     return RedirectToAction(nameof(Index));
                 else
                     throw result.Exception;
             }
+
             return View(avaliacao);
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) { return NotFound(); }
 
-            var avaliacao = await _avaliacaoRepository.ObterAsync(id.Value);
+            var result = await _avaliacaoRepository.ObterAsync(id.Value);
 
-            if (avaliacao == null)
-            {
-                return NotFound();
-            }
+            if (result == null) { return NotFound(); }
 
-            var viewModel = Mapper.Map<AvaliacaoViewModel>(avaliacao);
+            var avaliacao = Mapper.Map<AvaliacaoViewModel>(result);
 
-            return View(viewModel);
+            return View(avaliacao);
         }
 
-        // POST: Turma/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var result = await _avalicaoAppService.ExcluirAvaliacaoAsync(id);
+            var result = await _avaliacaoAppService.ExcluirAvaliacaoAsync(id);
 
             if (result.Success)
                 return RedirectToAction(nameof(Index));

@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.Domain.Interfaces.Repository;
-
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PUC.LDSI.DataBase.Repository
 {
@@ -11,20 +10,19 @@ namespace PUC.LDSI.DataBase.Repository
     {
         private readonly AppDbContext _context;
 
-        public OpcaoAvaliacaoRepository(AppDbContext context) : base(context)
+        public OpcaoAvaliacaoRepository(AppDbContext context) : base(context) 
         {
             _context = context;
         }
 
         public override async Task<OpcaoAvaliacao> ObterAsync(int id)
         {
-            var opcaoAvaliacao = await _context.OpcaoAvaliacao
-                    .Include(x => x.OpcoesProva)
-                    .Include(x => x.Questao)
-                        .ThenInclude(x => x.Avaliacao)
-                    .Where(x => x.Id == id).FirstOrDefaultAsync();
-            return opcaoAvaliacao;
+            var questao = await _context.OpcaoAvaliacao
+                .Include(a => a.OpcoesProva)
+                .Include(a => a.Questao).ThenInclude(a => a.Avaliacao)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            return questao;
         }
     }
 }
-

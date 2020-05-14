@@ -11,6 +11,5 @@ namespace PUC.LDSI.MVC.AutoMapper
                 cfg.AddProfile<DomainToViewModelMappingProfile>();
             });
         }
-
     }
 }

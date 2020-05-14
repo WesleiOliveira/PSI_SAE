@@ -2,8 +2,6 @@
 using PUC.LDSI.Domain.Exception;
 using PUC.LDSI.Domain.Interfaces.Repository;
 using PUC.LDSI.Domain.Interfaces.Services;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Services
@@ -17,10 +15,9 @@ namespace PUC.LDSI.Domain.Services
             _professorRepository = professorRepository;
         }
 
-
-        public async Task<int> IncluirProfessorAsync(string nomeProfessor)
+        public async Task<int> IncluirProfessorAsync(string nome)
         {
-            var professor = new Professor() { Nome = nomeProfessor };
+            var professor = new Professor() { Nome = nome };
 
             var erros = professor.Validate();
 
@@ -34,7 +31,5 @@ namespace PUC.LDSI.Domain.Services
             }
             else throw new DomainException(erros);
         }
-
     }
 }
-
