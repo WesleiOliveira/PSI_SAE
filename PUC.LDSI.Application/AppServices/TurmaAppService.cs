@@ -58,20 +58,6 @@ namespace PUC.LDSI.Application.AppServices
             }
         }
 
-        public async Task<DataResult<int>> IncluirAlunoAsync(int turmaId, string nomeAluno)
-        {
-            try
-            {
-                var retorno = await _turmaService.IncluirAlunoAsync(turmaId, nomeAluno);
-
-                return new DataResult<int>(retorno);
-            }
-            catch (Exception ex)
-            {
-                return new DataResult<int>(ex);
-            }
-        }
-
         public DataResult<List<Turma>> ListarTurmas()
         {
             try
@@ -100,8 +86,18 @@ namespace PUC.LDSI.Application.AppServices
             }
         }
 
+        public async Task<DataResult<int>> IncluirAlunoAsync(int turmaId, string nomeAluno)
+        {
+            try
+            {
+                var retorno = await _turmaService.IncluirAlunoAsync(turmaId, nomeAluno);
 
-
-
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
+        }
     }
 }

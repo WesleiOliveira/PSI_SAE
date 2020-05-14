@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,14 +10,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using PUC.LDSI.Identity.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Linq;
+using Microsoft.Extensions.Logging;
+using PUC.LDSI.Application;
 using PUC.LDSI.Application.Interfaces;
 using PUC.LDSI.Domain.Interfaces.Repository;
-using PUC.LDSI.Application;
-using System.Security.Claims;
+using PUC.LDSI.Identity.Entities;
 
 namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
 {
@@ -26,10 +26,10 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
         private readonly UserManager<Usuario> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        
         private readonly IProfessorAppService _professorAppService;
         private readonly ITurmaRepository _turmaRepository;
         private readonly ITurmaAppService _turmaAppService;
-
 
         public RegisterModel(
             UserManager<Usuario> userManager,
@@ -38,28 +38,16 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             IEmailSender emailSender,
             IProfessorAppService professorAppService,
             ITurmaRepository turmaRepository,
-            ITurmaAppService turmaAppService
-            )
+            ITurmaAppService turmaAppService)
         {
+            _professorAppService = professorAppService;
+            _turmaRepository = turmaRepository;
+            _turmaAppService = turmaAppService;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _professorAppService = professorAppService;
-            _turmaRepository = turmaRepository;
-            _turmaRepository = turmaRepository;
-            _turmaAppService = turmaAppService;
-
         }
-
-        public SelectList Turmas()
-        {
-            var turmas = _turmaRepository.ObterTodos().ToList();
-
-            return new SelectList(turmas, "Id", "Nome");
-        }
-
-
 
         [BindProperty]
         public InputModel Input { get; set; }
@@ -95,6 +83,13 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
 
             [Display(Name = "Informe sua Turma")]
             public int TurmaId { get; set; }
+        }
+
+        public SelectList Turmas()
+        {
+            var turmas = _turmaRepository.ObterTodos().ToList();
+
+            return new SelectList(turmas, "Id", "Nome");
         }
 
         public void OnGet(string returnUrl = null)

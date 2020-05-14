@@ -1,47 +1,136 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PUC.LDSI.Application.Interfaces;
-using PUC.LDSI.DataBase;
 using PUC.LDSI.Domain.Interfaces.Repository;
 using PUC.LDSI.Identity.Entities;
 using PUC.LDSI.MVC.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
 {
     public class QuestaoAvaliacaoController : BaseController
     {
-        private readonly IAvaliacaoAppService _avalicaoAppService;
+        private readonly IAvaliacaoAppService _avaliacaoAppService;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
         private readonly IQuestaoAvaliacaoRepository _questaoAvaliacaoRepository;
-        private readonly IOpcaoAvaliacaoRepository _opcaoAvalicaoRepository;
 
         public QuestaoAvaliacaoController(UserManager<Usuario> user,
-                        IAvaliacaoAppService avalicaoAppService,
-                        IAvaliacaoRepository avalicaoRepository) : base(user)
+                                          IAvaliacaoAppService avaliacaoAppService,
+                                          IAvaliacaoRepository avaliacaoRepository,
+                                          IQuestaoAvaliacaoRepository questaoAvaliacaoRepository) : base(user)
         {
-            _avalicaoAppService = avalicaoAppService;
-            _avaliacaoRepository = avalicaoRepository;
+            _avaliacaoAppService = avaliacaoAppService;
+            _avaliacaoRepository = avaliacaoRepository;
+            _questaoAvaliacaoRepository = questaoAvaliacaoRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int? avaliacaoId)
         {
-            var result = _avaliacaoRepository.ObterTodos();
+            if (avaliacaoId == null) { return NotFound(); }
 
-            var questoes = Mapper.Map<List<QuestaoAvaliacaoViewModel>>(result.ToList());
+            var result = await _avaliacaoRepository.ObterAsync(avaliacaoId.Value);
 
-            return View(questoes);
+            var avaliacao = Mapper.Map<AvaliacaoViewModel>(result);
+
+            return View(avaliacao);
         }
 
-        // GET: Turma/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? avaliacaoId)
         {
-            return View();
+            if (avaliacaoId == null) { return NotFound(); }
+
+            var result = await _avaliacaoRepository.ObterAsync(avaliacaoId.Value);
+
+            var avaliacao = Mapper.Map<AvaliacaoViewModel>(result);
+
+            var questao = new QuestaoAvaliacaoViewModel()
+            {
+                Avaliacao = avaliacao,
+                AvaliacaoId = avaliacao.Id
+            };
+
+            ViewData["OpcoesTipo"] = ObterOpcoesTipo();
+
+            return View(questao);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("AvaliacaoId,Tipo,Enunciado")] QuestaoAvaliacaoViewModel questao)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _avaliacaoAppService.AdicionarQuestaoAvaliacaoAsync(questao.AvaliacaoId, questao.Tipo, questao.Enunciado);
+
+                if (result.Success)
+                    return RedirectToAction(nameof(Index), new { avaliacaoId = questao.AvaliacaoId });
+                else
+                    throw result.Exception;
+            }
+
+            return View(questao);
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) { return NotFound(); }
+
+            var result = await _questaoAvaliacaoRepository.ObterAsync(id.Value);
+
+            if (result == null) { return NotFound(); }
+
+            var questao = Mapper.Map<QuestaoAvaliacaoViewModel>(result);
+
+            ViewData["OpcoesTipo"] = ObterOpcoesTipo(questao.Tipo);
+
+            return View(questao);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AvaliacaoId,Tipo,Enunciado")] QuestaoAvaliacaoViewModel questao)
+        {
+            if (id != questao.Id) { return NotFound(); }
+
+            if (ModelState.IsValid)
+            {
+                var result = await _avaliacaoAppService.AlterarQuestaoAvaliacaoAsync(questao.Id, questao.Tipo, questao.Enunciado);
+
+                if (result.Success)
+                    return RedirectToAction(nameof(Index), new { questao.AvaliacaoId });
+                else
+                    throw result.Exception;
+            }
+
+            return View(questao);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) { return NotFound(); }
+
+            var result = await _questaoAvaliacaoRepository.ObterAsync(id.Value);
+
+            if (result == null) { return NotFound(); }
+
+            var questao = Mapper.Map<QuestaoAvaliacaoViewModel>(result);
+
+            return View(questao);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var result = await _avaliacaoAppService.ExcluirQuestaoAvaliacaoAsync(id);
+
+            if (result.Success)
+                return RedirectToAction(nameof(Index), new { avaliacaoId = result.Data });
+            else
+                throw result.Exception;
         }
 
         private List<SelectListItem> ObterOpcoesTipo(int tipoId = 0)
@@ -50,74 +139,6 @@ namespace PUC.LDSI.MVC.Controllers
                 new SelectListItem{ Text="Múltipla Escolha", Value = "1", Selected = tipoId == 1 },
                 new SelectListItem{ Text="Verdadeiro ou Falso", Value = "2", Selected = tipoId == 2 }
             };
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Nome,Id")] QuestaoAvaliacaoViewModel questaoAvaliacao)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await _avalicaoAppService.AdicionarQuestaoAvaliacaoAsync(questaoAvaliacao.AvaliacaoId, questaoAvaliacao.Tipo, questaoAvaliacao.Enunciado);
-
-                if (result.Success)
-                    return RedirectToAction(nameof(Index));
-                else
-                    throw result.Exception;
-            }
-            return View(questaoAvaliacao);
-        }
-
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var questao = await _questaoAvaliacaoRepository.ObterAsync(id.Value);
-
-            if (questao == null)
-            {
-                return NotFound();
-            }
-
-            var viewModel = Mapper.Map<QuestaoAvaliacaoViewModel>(questao);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Nome,Id")] QuestaoAvaliacaoViewModel questao)
-        {
-            if (id != questao.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                var result = await _avalicaoAppService.AlterarQuestaoAvaliacaoAsync(questao.Id, questao.Tipo, questao.Enunciado);
-
-                if (result.Success)
-                    return RedirectToAction(nameof(Index));
-                else
-                    throw result.Exception;
-            }
-            return View(questao);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var result = await _avalicaoAppService.ExcluirQuestaoAvaliacaoAsync(id);
-
-            if (result.Success)
-                return RedirectToAction(nameof(Index));
-            else
-                throw result.Exception;
         }
     }
 }

@@ -2,7 +2,5 @@
 
 namespace PUC.LDSI.Domain.Interfaces.Repository
 {
-    public interface IProfessorRepository : IRepository<Professor> 
-    {
-    }
+    public interface IProfessorRepository : IRepository<Professor> { }
 }
