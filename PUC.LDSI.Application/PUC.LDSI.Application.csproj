@@ -9,9 +9,4 @@
     <ProjectReference Include="..\PUC.LDSI.Domain\PUC.LDSI.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AppServices\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

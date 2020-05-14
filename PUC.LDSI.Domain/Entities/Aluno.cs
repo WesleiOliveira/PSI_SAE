@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PUC.LDSI.Domain.Entities
 {
     public class Aluno : Entity
     {
-        public Aluno() { }
-        public override string [] Validate()
-        {
-            throw new NotImplementedException();
-        }
-       
-        public int Id { get; set; }
-        public DateTime DataCriacao { get; set; }
-        public varchar Nome { get; set; }
-        public int Turma { get; set; }        
+        public int TurmaId { get; set; }
+        public string Nome { get; set; }
+        public Turma Turma { get; set; }
+        public List<Prova> Provas { get; set; }
 
+        public override string[] Validate()
+        {
+            var erros = new List<string>();
+
+            if (TurmaId == 0)
+                erros.Add("A turma precisa ser informada!");
+
+            if (string.IsNullOrEmpty(Nome))
+                erros.Add("O nome precisa ser informado!");
+
+            return erros.ToArray();
+        }
     }
 }

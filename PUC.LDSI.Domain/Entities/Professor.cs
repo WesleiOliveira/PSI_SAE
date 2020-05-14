@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PUC.LDSI.Domain.Entities
 {
     public class Professor : Entity
     {
-        public Professor() { }
+        public string Nome { get; set; }
+        public List<Avaliacao> Avaliacoes { get; set; }
+
         public override string[] Validate()
         {
-            throw new NotImplementedException();
+            var erros = new List<string>();
+
+            if (string.IsNullOrEmpty(Nome))
+                erros.Add("O nome precisa ser informado!");
+
+            return erros.ToArray();
         }
-
-        public int Id { get; set; }
-        public DateTime DataCriacao { get; set; }
-        public string Nome { get; set; }
-
     }
 }
