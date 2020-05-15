@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
@@ -16,6 +16,10 @@
     <ProjectReference Include="..\PUC.LDSI.Domain\PUC.LDSI.Domain.csproj" />
     <ProjectReference Include="..\PUC.LDSI.Identity\PUC.LDSI.Identity.csproj" />
     <ProjectReference Include="..\PUC.LDSI.IoC\PUC.LDSI.IoC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
   </ItemGroup>
 
 </Project>

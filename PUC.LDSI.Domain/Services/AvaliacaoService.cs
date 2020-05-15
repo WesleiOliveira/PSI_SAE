@@ -2,6 +2,7 @@
 using PUC.LDSI.Domain.Exception;
 using PUC.LDSI.Domain.Interfaces.Repository;
 using PUC.LDSI.Domain.Interfaces.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,16 +12,17 @@ namespace PUC.LDSI.Domain.Services
     public class AvaliacaoService : IAvaliacaoService
     {
         private readonly IAvaliacaoRepository _avaliacaoRepository;
-        private readonly IQuestaoAvaliacaoRepository _questaoAvaliacaoRepository;
         private readonly IOpcaoAvaliacaoRepository _opcaoAvaliacaoRepository;
+        private readonly IQuestaoAvaliacaoRepository _questaoAvaliacaoRepository;
 
-        public AvaliacaoService(IAvaliacaoRepository avaliacaoRepository, IQuestaoAvaliacaoRepository questaoAvaliacaoRepository, IOpcaoAvaliacaoRepository opcaoAvaliacaoRepository)
+        public AvaliacaoService(IAvaliacaoRepository avaliacaoRepository,
+                                IOpcaoAvaliacaoRepository opcaoAvaliacaoRepository,
+                                IQuestaoAvaliacaoRepository questaoAvaliacaoRepository)
         {
             _avaliacaoRepository = avaliacaoRepository;
-            _questaoAvaliacaoRepository = questaoAvaliacaoRepository;
             _opcaoAvaliacaoRepository = opcaoAvaliacaoRepository;
+            _questaoAvaliacaoRepository = questaoAvaliacaoRepository;
         }
-
 
         public async Task<int> AdicionarAvaliacaoAsync(int professorId, string disciplina, string materia, string descricao)
         {
@@ -39,24 +41,10 @@ namespace PUC.LDSI.Domain.Services
             else throw new DomainException(erros);
         }
 
-        public async Task<int> AdicionarQuestaoAvaliacaoAsync(int avaliacaoId, int tipo, string enunciado)
-        {
-            var questaoAvaliacao = new QuestaoAvaliacao() { AvaliacaoId = avaliacaoId, Tipo = tipo, Enunciado = enunciado };
-
-            var erros = questaoAvaliacao.Validate();
-
-            if(erros.Length == 0)
-            {
-                await _questaoAvaliacaoRepository.AdicionarAsync(questaoAvaliacao);
-                _questaoAvaliacaoRepository.SaveChanges();
-
-                return questaoAvaliacao.Id;
-            }
-            else throw new DomainException(erros);
-        }
-
         public async Task<int> AdicionarOpcaoAvaliacaoAsync(int questaoId, string descricao, bool verdadeira)
         {
+            ValidarOpcaoAvaliacao(questaoId, verdadeira);
+
             var opcaoAvaliacao = new OpcaoAvaliacao() { QuestaoId = questaoId, Descricao = descricao, Verdadeira = verdadeira };
 
             var erros = opcaoAvaliacao.Validate();
@@ -64,9 +52,27 @@ namespace PUC.LDSI.Domain.Services
             if (erros.Length == 0)
             {
                 await _opcaoAvaliacaoRepository.AdicionarAsync(opcaoAvaliacao);
+
                 _opcaoAvaliacaoRepository.SaveChanges();
 
                 return opcaoAvaliacao.Id;
+            }
+            else throw new DomainException(erros);
+        }
+
+        public async Task<int> AdicionarQuestaoAvaliacaoAsync(int avaliacaoId, int tipo, string enunciado)
+        {
+            var questaoAvaliacao = new QuestaoAvaliacao() { AvaliacaoId = avaliacaoId, Tipo = tipo, Enunciado = enunciado };
+
+            var erros = questaoAvaliacao.Validate();
+
+            if (erros.Length == 0)
+            {
+                await _questaoAvaliacaoRepository.AdicionarAsync(questaoAvaliacao);
+
+                _questaoAvaliacaoRepository.SaveChanges();
+
+                return questaoAvaliacao.Id;
             }
             else throw new DomainException(erros);
         }
@@ -75,9 +81,9 @@ namespace PUC.LDSI.Domain.Services
         {
             var avaliacao = await _avaliacaoRepository.ObterAsync(id);
 
+            avaliacao.Descricao = descricao;
             avaliacao.Disciplina = disciplina;
             avaliacao.Materia = materia;
-            avaliacao.Descricao = descricao;
 
             var erros = avaliacao.Validate();
 
@@ -90,29 +96,17 @@ namespace PUC.LDSI.Domain.Services
             else throw new DomainException(erros);
         }
 
-        public async Task<int> AlterarQuestaoAvaliacaoAsync(int id, int tipo, string enunciado)
-        {
-            var questaAvaliacao = await _questaoAvaliacaoRepository.ObterAsync(id);
-            questaAvaliacao.Tipo = tipo;
-            questaAvaliacao.Enunciado = enunciado;
-
-            var erros = questaAvaliacao.Validate();
-            if (erros.Length == 0)
-            {
-                _questaoAvaliacaoRepository.Modificar(questaAvaliacao);
-
-                return _questaoAvaliacaoRepository.SaveChanges();
-            }
-            else throw new DomainException(erros);
-        }
-
         public async Task<int> AlterarOpcaoAvaliacaoAsync(int id, string descricao, bool verdadeira)
         {
             var opcaoAvaliacao = await _opcaoAvaliacaoRepository.ObterAsync(id);
+
+            ValidarOpcaoAvaliacao(opcaoAvaliacao.QuestaoId, verdadeira);
+
             opcaoAvaliacao.Descricao = descricao;
             opcaoAvaliacao.Verdadeira = verdadeira;
 
             var erros = opcaoAvaliacao.Validate();
+
             if (erros.Length == 0)
             {
                 _opcaoAvaliacaoRepository.Modificar(opcaoAvaliacao);
@@ -122,6 +116,23 @@ namespace PUC.LDSI.Domain.Services
             else throw new DomainException(erros);
         }
 
+        public async Task<int> AlterarQuestaoAvaliacaoAsync(int id, int tipo, string enunciado)
+        {
+            var questaoAvaliacao = await _questaoAvaliacaoRepository.ObterAsync(id);
+
+            questaoAvaliacao.Tipo = tipo;
+            questaoAvaliacao.Enunciado = enunciado;
+
+            var erros = questaoAvaliacao.Validate();
+
+            if (erros.Length == 0)
+            {
+                _questaoAvaliacaoRepository.Modificar(questaoAvaliacao);
+
+                return _questaoAvaliacaoRepository.SaveChanges();
+            }
+            else throw new DomainException(erros);
+        }
 
         public async Task ExcluirAvaliacaoAsync(int id)
         {
@@ -130,33 +141,75 @@ namespace PUC.LDSI.Domain.Services
             if (avaliacao.Publicacoes?.Count > 0)
                 throw new DomainException("Não é possível excluir uma avaliação que já foi publicada ou realizada!");
 
+            if (avaliacao.Questoes?.Count > 0) 
+            {
+                foreach (var questao in avaliacao.Questoes) 
+                {
+                    if (questao.Opcoes.Count > 0) 
+                    {
+                        foreach (var opcao in questao.Opcoes)
+                            _opcaoAvaliacaoRepository.Excluir(opcao.Id);
+
+                        _opcaoAvaliacaoRepository.SaveChanges();
+                    }
+
+                    _questaoAvaliacaoRepository.Excluir(questao.Id);
+                }
+
+                _questaoAvaliacaoRepository.SaveChanges();
+            }
+
             _avaliacaoRepository.Excluir(id);
 
             _avaliacaoRepository.SaveChanges();
         }
 
-        public async Task ExcluirQuestaoAvaliacaoAsync(int id)
+        public async Task<int> ExcluirOpcaoAvaliacaoAsync(int id)
         {
-            var questao = await _questaoAvaliacaoRepository.ObterAsync(id);
+            var opcaoAvaliacao = await _opcaoAvaliacaoRepository.ObterAsync(id);
 
-            if (questao.QuestoesProva?.Count > 0)
-                throw new DomainException("Não é possível excluir a questão de uma avaliação que já foi realizada!");
-
-            _questaoAvaliacaoRepository.Excluir(id);
-
-            _questaoAvaliacaoRepository.SaveChanges();
-        }
-
-        public async Task ExcluirOpcaoAvaliacaoAsync(int id)
-        {
-            var opcao = await _opcaoAvaliacaoRepository.ObterAsync(id);
-
-            if (opcao.OpcoesProva?.Count > 0)
+            if (opcaoAvaliacao.OpcoesProva?.Count > 0)
                 throw new DomainException("Não é possível excluir a opção de uma avaliação que já foi realizada!");
 
             _opcaoAvaliacaoRepository.Excluir(id);
 
             _opcaoAvaliacaoRepository.SaveChanges();
+
+            return opcaoAvaliacao.QuestaoId;
+        }
+
+        public async Task<int> ExcluirQuestaoAvaliacaoAsync(int id)
+        {
+            var questaoAvaliacao = await _questaoAvaliacaoRepository.ObterAsync(id);
+
+            if (questaoAvaliacao.QuestoesProva?.Count > 0)
+                throw new DomainException("Não é possível excluir a questão de uma avaliação que já foi realizada!");
+
+            if (questaoAvaliacao.Opcoes?.Count > 0)
+            {
+                foreach (var opcao in questaoAvaliacao.Opcoes)
+                {
+                    _opcaoAvaliacaoRepository.Excluir(opcao.Id);
+                }
+
+                _opcaoAvaliacaoRepository.SaveChanges();
+            }
+
+            _questaoAvaliacaoRepository.Excluir(id);
+
+            _questaoAvaliacaoRepository.SaveChanges();
+
+            return questaoAvaliacao.AvaliacaoId;
+        }
+
+        private void ValidarOpcaoAvaliacao(int questaoId, bool verdadeira)
+        {
+            if (verdadeira) {
+                var questaoGravada = _questaoAvaliacaoRepository.ObterAsync(questaoId).Result;
+
+                if (questaoGravada.Tipo == 1 && questaoGravada.Opcoes.Where(x => x.Verdadeira).Any())
+                    throw new DomainException("Já existe uma opção marcada como verdadeira para essa questão.");
+            }
         }
     }
 }
