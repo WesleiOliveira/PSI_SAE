@@ -15,7 +15,7 @@ namespace PUC.LDSI.MVC.AutoMapper
                 .ReverseMap();
 
             CreateMap<QuestaoAvaliacao, QuestaoAvaliacaoViewModel>().ReverseMap();
-
+            CreateMap<Publicacao, PublicacaoViewModel>().ReverseMap();
             CreateMap<OpcaoAvaliacao, OpcaoAvaliacaoViewModel>().ReverseMap();
         }
     }
