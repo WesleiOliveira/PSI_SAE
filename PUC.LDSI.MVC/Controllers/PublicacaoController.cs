@@ -29,7 +29,7 @@ namespace PUC.LDSI.MVC.Controllers
             }
 
 
-            // GET: Publicacao
+          
             public async Task<IActionResult> Index()
             {
                 var result = _publicacaoRepository.ObterTodos();
@@ -37,57 +37,7 @@ namespace PUC.LDSI.MVC.Controllers
 
                 return View(publicacoes);
             }
-
-            /*
-            // GET: Publicacao/Details/5
-            public async Task<IActionResult> Details(int? id)
-            {
-                if (id == null)
-                {
-                    return NotFound();
-                }
-                var publicacao = await _context.Publicacao
-                    .Include(p => p.Avaliacao)
-                    .Include(p => p.Turma)
-                    .FirstOrDefaultAsync(m => m.Id == id);
-                if (publicacao == null)
-                {
-                    return NotFound();
-                }
-                return View(publicacao);
-            }
-            */
-
-            /*
-            // GET: Publicacao/Create
-            public IActionResult Create()
-            {
-                ViewData["AvaliacaoId"] = new SelectList(_context.Avaliacao, "Id", "Descricao");
-                ViewData["TurmaId"] = new SelectList(_context.Turma, "Id", "Nome");
-                return View();
-            }
-            */
-
-            // POST: Publicacao/Create
-            // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-            // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public async Task<IActionResult> Create([Bind("AvaliacaoId,TurmaId,DataInicio,DataFim,ValorProva,Id,DataCriacao")] Publicacao publicacao)
-            {
-                if (ModelState.IsValid)
-                {
-                    _context.Add(publicacao);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-
-                ViewData["AvaliacaoId"] = new SelectList(_context.Avaliacao, "Id", "Descricao", publicacao.AvaliacaoId);
-                ViewData["TurmaId"] = new SelectList(_context.Turma, "Id", "Nome", publicacao.TurmaId);
-                return View(publicacao);
-            }
-
-            // GET: Publicacao/Edit/5
+        
             public async Task<IActionResult> Edit(int? id)
             {
                 if (id == null)
@@ -105,9 +55,23 @@ namespace PUC.LDSI.MVC.Controllers
                 return View(publicacao);
             }
 
-            // POST: Publicacao/Edit/5
-            // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-            // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> Create([Bind("AvaliacaoId,TurmaId,DataInicio,DataFim,ValorProva,Id,DataCriacao")] Publicacao publicacao)
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(publicacao);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+
+                ViewData["AvaliacaoId"] = new SelectList(_context.Avaliacao, "Id", "Descricao", publicacao.AvaliacaoId);
+                ViewData["TurmaId"] = new SelectList(_context.Turma, "Id", "Nome", publicacao.TurmaId);
+                return View(publicacao);
+            }
+
+
             [HttpPost]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoId,TurmaId,DataInicio,DataFim,ValorProva,Id,DataCriacao")] Publicacao publicacao)
@@ -142,7 +106,7 @@ namespace PUC.LDSI.MVC.Controllers
                 return View(publicacao);
             }
 
-            // GET: Publicacao/Delete/5
+            
             public async Task<IActionResult> Delete(int? id)
             {
                 if (id == null)
@@ -162,7 +126,7 @@ namespace PUC.LDSI.MVC.Controllers
                 return View(publicacao);
             }
 
-            // POST: Publicacao/Delete/5
+            
             [HttpPost, ActionName("Delete")]
             [ValidateAntiForgeryToken]
             public async Task<IActionResult> DeleteConfirmed(int id)
@@ -173,11 +137,5 @@ namespace PUC.LDSI.MVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            /*
-            private bool PublicacaoExists(int id)
-            {
-                return _context.Publicacao.Any(e => e.Id == id);
-            }
-            */
         }
     }

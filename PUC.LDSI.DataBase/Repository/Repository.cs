@@ -14,7 +14,6 @@ namespace PUC.LDSI.DataBase.Repository
         protected Repository(AppDbContext context)
         {
             DbContext = context;
-
             DbEntity = DbContext.Set<TEntity>();
         }
 

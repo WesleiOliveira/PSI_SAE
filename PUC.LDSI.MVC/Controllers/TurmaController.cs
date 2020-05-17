@@ -24,7 +24,6 @@ namespace PUC.LDSI.MVC.Controllers
             _turmaRepository = turmaRepository;
         }
 
-        // GET: Turma
         public IActionResult Index()
         {
             var result = _turmaRepository.ObterTodos();
@@ -34,7 +33,6 @@ namespace PUC.LDSI.MVC.Controllers
             return View(turmas);
         }
 
-        // GET: Turma/Create
         public IActionResult Create()
         {
             return View();
@@ -56,7 +54,6 @@ namespace PUC.LDSI.MVC.Controllers
             return View(turma);
         }
 
-        // GET: Turma/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

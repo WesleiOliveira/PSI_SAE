@@ -23,6 +23,7 @@ namespace PUC.LDSI.DataBase.Repository
                 .Include(x => x.Professor)
                 .Where(x => x.Professor.Id == professorId);
 
+
             return await query.ToListAsync();
         }
 
@@ -33,6 +34,7 @@ namespace PUC.LDSI.DataBase.Repository
                 .Include(x => x.Questoes).ThenInclude(y => y.Opcoes)
                 .Include(x => x.Publicacoes)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
 
             return avaliacao;
         }

@@ -59,6 +59,7 @@ namespace PUC.LDSI.DataBase.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+
             migrationBuilder.CreateTable(
                 name: "Aluno",
                 columns: table => new

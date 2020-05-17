@@ -18,15 +18,10 @@ namespace PUC.LDSI.DataBase.Repository
             _context = context;
         }
 
-
-
         public override async Task<Publicacao> ObterAsync(int id)
         {
             return await _context.Publicacao.Include(x => x.Avaliacao).ThenInclude(y => y.Provas).FirstOrDefaultAsync(z => z.Id == id);
         }
-
-
-
 
         public async Task<List<Publicacao>> ListarPublicacoesDoProfessorAsync(int id)
         {

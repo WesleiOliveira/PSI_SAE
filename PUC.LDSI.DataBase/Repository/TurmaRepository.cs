@@ -18,7 +18,6 @@ namespace PUC.LDSI.DataBase.Repository
         public override async Task<Turma> ObterAsync(int id)
         {
             var turma = await _context.Turma.Include(x => x.Alunos).Where(x => x.Id == id).FirstOrDefaultAsync();
-
             return turma;
         }
     }

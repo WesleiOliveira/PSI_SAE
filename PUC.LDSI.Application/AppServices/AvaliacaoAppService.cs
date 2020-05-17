@@ -19,7 +19,6 @@ namespace PUC.LDSI.Application.AppServices
             try
             {
                 var retorno = await _avaliacaoService.AdicionarAvaliacaoAsync(professorId, disciplina, materia, descricao);
-
                 return new DataResult<int>(retorno);
             }
             catch (Exception ex)

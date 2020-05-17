@@ -177,8 +177,12 @@ namespace PUC.LDSI.Domain.Services
         {
             var avaliacao = await _avaliacaoRepository.ObterAsync(id);
 
+
             if (avaliacao.Publicacoes?.Count > 0)
-                throw new DomainException("Não é possível excluir uma avaliação já publicada ou realizada");
+            {
+                throw new DomainException("Não é possível excluir uma avaliação que já foi publicada ou realizada!");
+            }
+
 
             if (avaliacao.Questoes?.Count > 0) 
             {
@@ -199,7 +203,6 @@ namespace PUC.LDSI.Domain.Services
             }
 
             _avaliacaoRepository.Excluir(id);
-
             _avaliacaoRepository.SaveChanges();
         }
 
@@ -215,10 +218,11 @@ namespace PUC.LDSI.Domain.Services
             var opcaoAvaliacao = await _opcaoAvaliacaoRepository.ObterAsync(id);
 
             if (opcaoAvaliacao.OpcoesProva?.Count > 0)
-                throw new DomainException("Não é possível excluir a opção de uma avaliação ja realizada");
+            {
+                throw new DomainException("Não é possível excluir a opção de uma avaliação que já foi realizada!");
+            }
 
             _opcaoAvaliacaoRepository.Excluir(id);
-
             _opcaoAvaliacaoRepository.SaveChanges();
 
             return opcaoAvaliacao.QuestaoId;
@@ -229,7 +233,10 @@ namespace PUC.LDSI.Domain.Services
             var questaoAvaliacao = await _questaoAvaliacaoRepository.ObterAsync(id);
 
             if (questaoAvaliacao.QuestoesProva?.Count > 0)
-                throw new DomainException("Não é possível excluir a questão de uma avaliação ja realizada!");
+            {
+                throw new DomainException("Não é possível excluir a questão de uma avaliação que já foi realizada!");
+            }
+
 
             if (questaoAvaliacao.Opcoes?.Count > 0)
             {
@@ -241,6 +248,7 @@ namespace PUC.LDSI.Domain.Services
                 _opcaoAvaliacaoRepository.SaveChanges();
             }
 
+
             _questaoAvaliacaoRepository.Excluir(id);
 
             _questaoAvaliacaoRepository.SaveChanges();
@@ -250,11 +258,15 @@ namespace PUC.LDSI.Domain.Services
 
         private void ValidarOpcaoAvaliacao(int questaoId, bool verdadeira)
         {
-            if (verdadeira) {
+            if (verdadeira) 
+            {
                 var questaoGravada = _questaoAvaliacaoRepository.ObterAsync(questaoId).Result;
 
+
                 if (questaoGravada.Tipo == 1 && questaoGravada.Opcoes.Where(x => x.Verdadeira).Any())
-                    throw new DomainException("Existe uma opção marcada como verdadeira para esta questão.");
+                { 
+                    throw new DomainException("Já existe uma opção marcada como verdadeira para essa questão.");
+                }
             }
         }
     }
