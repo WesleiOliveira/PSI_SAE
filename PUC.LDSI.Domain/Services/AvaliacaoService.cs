@@ -27,6 +27,13 @@ namespace PUC.LDSI.Domain.Services
             _publicacaoAvaliacaoRepository = publicacaoAvaliacaoRepository;
         }
 
+        public List<Avaliacao> ListarAvaliacoes()
+        {
+            var lista = _avaliacaoRepository.ObterTodos().ToList();
+
+            return lista;
+        }
+
         public async Task<int> AdicionarAvaliacaoAsync(int professorId, string disciplina, string materia, string descricao)
         {
             var avaliacao = new Avaliacao() { ProfessorId = professorId, Disciplina = disciplina, Materia = materia, Descricao = descricao };

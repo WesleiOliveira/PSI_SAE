@@ -102,7 +102,7 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var result = default(DataResult<int>);
+                var result = default(Application.DataResult<int>);
 
                 if (Input.Tipo == 1)
                     result = await _professorAppService.IncluirProfessorAsync(Input.Nome);

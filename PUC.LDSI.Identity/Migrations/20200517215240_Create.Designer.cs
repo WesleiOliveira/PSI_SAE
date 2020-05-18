@@ -10,14 +10,14 @@ using PUC.LDSI.Identity.Context;
 namespace PUC.LDSI.Identity.Migrations
 {
     [DbContext(typeof(SecurityContext))]
-    [Migration("20200213121939_CreateIdentity")]
-    partial class CreateIdentity
+    [Migration("20200517215240_Create")]
+    partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -174,6 +174,8 @@ namespace PUC.LDSI.Identity.Migrations
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<int>("UserType");
 
                     b.HasKey("Id");
 

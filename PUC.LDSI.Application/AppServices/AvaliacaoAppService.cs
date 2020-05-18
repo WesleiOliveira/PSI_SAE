@@ -1,6 +1,8 @@
 ﻿using PUC.LDSI.Application.Interfaces;
+using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.Domain.Interfaces.Services;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PUC.LDSI.Application.AppServices
@@ -12,6 +14,20 @@ namespace PUC.LDSI.Application.AppServices
         public AvaliacaoAppService(IAvaliacaoService avaliacaoService)
         {
             _avaliacaoService = avaliacaoService;
+        }
+
+        public DataResult<List<Avaliacao>> ListarAvaliacoes()
+        {
+            try
+            {
+                var retorno = _avaliacaoService.ListarAvaliacoes();
+
+                return new DataResult<List<Avaliacao>>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<List<Avaliacao>>(ex);
+            }
         }
 
         public async Task<DataResult<int>> AdicionarAvaliacaoAsync(int professorId, string disciplina, string materia, string descricao)

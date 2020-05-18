@@ -1,10 +1,13 @@
-﻿using System;
+﻿using PUC.LDSI.Domain.Entities;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PUC.LDSI.Domain.Interfaces.Services
 {
     public interface IAvaliacaoService
     {
+        List<Avaliacao> ListarAvaliacoes();
         Task<int> AdicionarAvaliacaoAsync(int professorId, string disciplina, string materia, string descricao);
         Task<int> AdicionarQuestaoAvaliacaoAsync(int avaliacaoId, int tipo, string enunciado);
         Task<int> AdicionarOpcaoAvaliacaoAsync(int questaoId, string descricao, bool verdadeira);
