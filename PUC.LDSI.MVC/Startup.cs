@@ -39,6 +39,12 @@ namespace PUC.LDSI.MVC
             NativeBootStrapperBase.RegisterServices(services);
 
             AutoMapperConfig.RegisterMappings();
+
+            services.AddAuthorization(options =>
+            {
+            options.AddPolicy("Professor", policy => policy.RequireRole("Professor"));
+            options.AddPolicy("Aluno", policy => policy.RequireRole("Aluno"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

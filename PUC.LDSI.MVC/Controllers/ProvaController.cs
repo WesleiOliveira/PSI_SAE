@@ -15,6 +15,7 @@ using PUC.LDSI.MVC.Models;
 
 namespace PUC.LDSI.MVC.Controllers
 {
+    [Authorize(Policy = "Aluno")]
     public class ProvaController : BaseController
     {
         // private readonly IAvaliacaoAppService _avaliacaoAppService;
