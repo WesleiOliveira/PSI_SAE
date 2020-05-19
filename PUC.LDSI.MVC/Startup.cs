@@ -30,6 +30,12 @@ namespace PUC.LDSI.MVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAuthorization(options =>
+        {
+                options.AddPolicy("Professor", policy => policy.RequireRole("Professor"));
+                options.AddPolicy("Aluno", policy => policy.RequireRole("Aluno"));
+            });
+
             services.AddDbContext<AppDbContext>(
                 o => o.UseSqlServer(Configuration.GetConnectionString("Conexao"),
                 x => x.MigrationsAssembly("PUC.LDSI.DataBase")));
