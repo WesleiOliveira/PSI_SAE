@@ -17,6 +17,10 @@ namespace PUC.LDSI.MVC.Controllers
         private readonly IAvaliacaoRepository _avaliacaoRepository;
         private readonly IQuestaoAvaliacaoRepository _questaoAvaliacaoRepository;
 
+        [Authorize(Policy = "Professor")]
+        public class TurmaController : BaseController
+
+
         public QuestaoAvaliacaoController(UserManager<Usuario> user,
                                           IAvaliacaoAppService avaliacaoAppService,
                                           IAvaliacaoRepository avaliacaoRepository,

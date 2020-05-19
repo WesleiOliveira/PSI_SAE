@@ -10,6 +10,9 @@ namespace PUC.LDSI.MVC.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
+        [Authorize(Policy = "Professor")]
+        public class TurmaController : BaseController
+
         public IActionResult Index()
         {
             return View();
