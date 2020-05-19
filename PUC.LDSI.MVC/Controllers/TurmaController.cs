@@ -11,14 +11,12 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
 {
+    [Authorize(Policy = "Professor")]
     public class TurmaController : BaseController
     {
         private readonly ITurmaAppService _turmaAppService;
         private readonly ITurmaRepository _turmaRepository;
-
-        [Authorize(Policy = "Professor")]
-        public class TurmaController : BaseController
-
+        
         public TurmaController(UserManager<Usuario> user, 
                                ITurmaAppService turmaAppService, 
                                ITurmaRepository turmaRepository) : base(user)

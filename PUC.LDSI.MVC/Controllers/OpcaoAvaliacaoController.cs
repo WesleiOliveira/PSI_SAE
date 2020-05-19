@@ -9,13 +9,11 @@ using PUC.LDSI.MVC.Models;
 using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
-
-    [Authorize(Policy = "Professor")]
+{ 
+[Authorize(Policy = "Professor")]
 public class TurmaController : BaseController
 
-
 {
-
     public class OpcaoAvaliacaoController : BaseController
     {
         private readonly IAvaliacaoAppService _avaliacaoAppService;
@@ -136,4 +134,4 @@ public class TurmaController : BaseController
                 throw result.Exception;
         }
     }
-}
+} }
