@@ -15,12 +15,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="AvaliacaoId" class="control-label"></label>
-                <select asp-for="AvaliacaoId" class="form-control" asp-items="ViewBag.AvaliacaoId"></select>
+                <label class="control-label">@Html.DisplayFor(model => model.Avaliacao.Descricao) / @Html.DisplayFor(model => model.Avaliacao.Materia) / @Html.DisplayFor(model => model.Avaliacao.Descricao)</label>
                 <span asp-validation-for="AvaliacaoId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TurmaId" class="control-label"></label>
-                <select asp-for="TurmaId" class="form-control" asp-items="ViewBag.TurmaId"></select>
+                <label class="control-label">@Html.DisplayFor(model => model.Turma.Nome)</label>
                 <span asp-validation-for="TurmaId" class="text-danger"></span>
             </div>
             <div class="form-group">

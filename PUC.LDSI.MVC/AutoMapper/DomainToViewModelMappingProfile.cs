@@ -22,6 +22,7 @@ namespace PUC.LDSI.MVC.AutoMapper
                 .ForMember(x => x.Disciplina, opt => opt.MapFrom(x => x.Avaliacao.Disciplina))
                 .ForMember(x => x.Descricao, opt => opt.MapFrom(x => x.Avaliacao.Descricao))
                 .ForMember(x => x.Materia, opt => opt.MapFrom(x => x.Avaliacao.Materia))
+                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Avaliacao))
                 .ReverseMap();
         }
     }
