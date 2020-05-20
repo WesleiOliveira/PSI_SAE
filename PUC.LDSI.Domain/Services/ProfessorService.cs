@@ -24,7 +24,6 @@ namespace PUC.LDSI.Domain.Services
             if (erros.Length == 0)
             {
                 await _professorRepository.AdicionarAsync(professor);
-
                 _professorRepository.SaveChanges();
 
                 return professor.Id;

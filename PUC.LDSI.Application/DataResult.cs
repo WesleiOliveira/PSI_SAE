@@ -17,7 +17,6 @@ namespace PUC.LDSI.Application
         public DataResult(TData data)
         {
             Success = true;
-
             Data = data;
         }
 

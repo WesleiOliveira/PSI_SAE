@@ -23,6 +23,7 @@ namespace PUC.LDSI.IoC
             services.AddScoped<IOpcaoAvaliacaoRepository, OpcaoAvaliacaoRepository>();
             services.AddScoped<IProfessorRepository, ProfessorRepository>();
             services.AddScoped<IQuestaoAvaliacaoRepository, QuestaoAvaliacaoRepository>();
+            services.AddScoped<IPublicacaoRepository, PublicacaoRepository>();
 
             //Domain - Services
             services.AddScoped<ITurmaService, TurmaService>();

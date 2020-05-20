@@ -8,6 +8,7 @@ namespace PUC.LDSI.MVC.AutoMapper
         {
             Mapper.Initialize(cfg =>
             {
+
                 cfg.AddProfile<DomainToViewModelMappingProfile>();
             });
         }
