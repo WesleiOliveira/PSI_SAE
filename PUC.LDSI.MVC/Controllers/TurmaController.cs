@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
 {
+    [Authorize(Policy = "Professor")]
     public class TurmaController : BaseController
     {
         private readonly ITurmaAppService _turmaAppService;

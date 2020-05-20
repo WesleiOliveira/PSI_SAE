@@ -17,6 +17,7 @@ using PUC.LDSI.MVC.Models;
 
 namespace PUC.LDSI.MVC.Controllers
 {
+    [Authorize(Policy = "Professor")]
     public class PublicacaoController : BaseController
     {
         private readonly IAvaliacaoAppService _avaliacaoAppService;

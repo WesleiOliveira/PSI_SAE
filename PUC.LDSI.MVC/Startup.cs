@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,12 @@ namespace PUC.LDSI.MVC
             NativeBootStrapperBase.RegisterServices(services);
 
             AutoMapperConfig.RegisterMappings();
+
+            services.AddAuthorization(options =>
+            {
+            options.AddPolicy("Professor", policy => policy.RequireRole("Professor"));
+            options.AddPolicy("Aluno", policy => policy.RequireRole("Aluno"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,3 +67,4 @@ namespace PUC.LDSI.MVC
         }
     }
 }
+
