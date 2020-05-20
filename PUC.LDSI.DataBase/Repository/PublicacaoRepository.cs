@@ -20,15 +20,14 @@ namespace PUC.LDSI.DataBase.Repository
 
         public async Task<List<Publicacao>> ListarPublicacoesDoProfessorAsync(int id)
         {
-            return await _context.Publicacao.Include(x => x.Avaliacao).Include(x => x.Turma).Where(x => x.Id == id).ToListAsync();
+            return await _context.Publicacao.Include(x => x.Avaliacao).Include(x => x.Turma)
+                .Where(x => x.Avaliacao.ProfessorId == id && x.Turma.Id == x.TurmaId).ToListAsync();
         }
 
         public Task<List<Publicacao>> ListarPublicacoesDoAlunoAsync(int id)
         {
-            var publicacao = _context.Publicacao.Include(x => x.Avaliacao).ThenInclude(x => x.Provas).Include(x => x.Turma).ThenInclude(x => x.Alunos)
-                .Where(x => x.Turma.Alunos.Any(z => z.Id == id)).ToListAsync();
-
-            return publicacao;
+            return _context.Publicacao.Include(x => x.Turma).Include(x => x.Turma.Alunos).Include(x => x.Avaliacao).ThenInclude(z => z.Provas)
+            .Where(x => x.Turma.Alunos.Any(z => z.Id == id)).ToListAsync();
         }
     }
 }

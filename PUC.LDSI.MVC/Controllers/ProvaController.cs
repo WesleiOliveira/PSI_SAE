@@ -18,9 +18,6 @@ namespace PUC.LDSI.MVC.Controllers
     [Authorize(Policy = "Aluno")]
     public class ProvaController : BaseController
     {
-        // private readonly IAvaliacaoAppService _avaliacaoAppService;
-
-        // private readonly ITurmaAppService _turmaAppService;
         private readonly IPublicacaoRepository _publicacaoRepository;
 
         public ProvaController(UserManager<Usuario> user,
@@ -31,8 +28,8 @@ namespace PUC.LDSI.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = _publicacaoRepository.ListarPublicacoesDoAlunoAsync(UsuarioLogado.IntegrationId);
-            var provas = Mapper.Map<List<ProvaPublicadaViewModel>>(result.Result);
+            var result = await _publicacaoRepository.ListarPublicacoesDoAlunoAsync(UsuarioLogado.IntegrationId);
+            var provas = Mapper.Map<List<ProvaPublicadaViewModel>>(result);
             return View(provas);
         }
     }

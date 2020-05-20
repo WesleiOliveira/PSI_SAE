@@ -10,17 +10,6 @@ namespace PUC.LDSI.MVC.Models
 {
     public class ProvaPublicadaViewModel
     {
-        //private readonly UserManager<Usuario> _userManager;
-        //private readonly SignInManager<Usuario> _signInManager;
-
-        //public ProvaPublicadaViewModel(
-        //    UserManager<Usuario> userManager,
-        //    SignInManager<Usuario> signInManager)
-        //{
-        //    _userManager = userManager;
-        //    _signInManager = signInManager;
-        //}
-
         public int AvaliacaoId { get; set; }
 
         [DisplayName("Publicado Em")]
@@ -39,10 +28,10 @@ namespace PUC.LDSI.MVC.Models
         public decimal NotaObtida { get; set; }
 
         [DisplayName("Disciplina")]
-        public decimal Disciplina { get; set; }
+        public string Disciplina { get; set; }
 
         [DisplayName("Matéria")]
-        public decimal Materia { get; set; }
+        public string Materia { get; set; }
 
         [DisplayName("Descrição")]
         public string Descricao { get; set; }
@@ -50,13 +39,8 @@ namespace PUC.LDSI.MVC.Models
         [DisplayName("Situação")]
         public string Status
         {
-            get
-            {
-                return Status;
-            }
-            set
-            {
-                this.ConverterData();
+            get {
+                return this.ConverterData();
             }
         }
 
@@ -68,15 +52,15 @@ namespace PUC.LDSI.MVC.Models
             }
             else if (DateTime.Now < DataFim && DateTime.Now > DataInicio)
             {
-                return "Disponível ";
+                return "Disponível";
             }
-            else
+            else if (DateTime.Now > DataFim)
             {
-                return "Perdida ";
+                return "Perdida";
+            } else
+            {
+                return "Realizada";
             }
-            //else if (_signInManager.IsSignedIn(System.Security.Claims.ClaimsPrincipal.Current))
-            //{
-            //    return "Realizada ";    
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -66,3 +67,4 @@ namespace PUC.LDSI.MVC
         }
     }
 }
+

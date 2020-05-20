@@ -4,11 +4,8 @@
     ViewData["Title"] = "Minhas Avaliações";
 }
 
-<h2>Index</h2>
+<h2>Provas</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -38,35 +35,37 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Disciplina) / @Html.DisplayFor(modelItem => item.Materia) / @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataCriacao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataInicio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataFim)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ValorProva)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NotaObtida)
-                </td>
-                <td>
-                    @if (item.Status == "Agendada" || item.Status == "Disponível")
-                    {
-                        <label>---</label>
-                    }
-                    @if (item.Status == "Perdida")
-                    {
-                        <label>0</label>
-                    }
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Disciplina) / @Html.DisplayFor(modelItem => item.Materia) / @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataCriacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorProva)
+            </td>
+            <td>
+                @if (item.Status == "Agendada" || item.Status == "Disponível")
+                {
+                    <label>---</label>
+                }
+                @if (item.Status == "Perdida")
+                {
+                    <label>0</label>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+        </tr>
         }
     </tbody>
 </table>
