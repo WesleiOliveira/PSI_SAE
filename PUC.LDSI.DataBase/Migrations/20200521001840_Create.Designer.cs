@@ -10,7 +10,7 @@ using PUC.LDSI.DataBase;
 namespace PUC.LDSI.DataBase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200517214651_Create")]
+    [Migration("20200521001840_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

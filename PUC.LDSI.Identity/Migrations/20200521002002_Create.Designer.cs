@@ -10,7 +10,7 @@ using PUC.LDSI.Identity.Context;
 namespace PUC.LDSI.Identity.Migrations
 {
     [DbContext(typeof(SecurityContext))]
-    [Migration("20200517215240_Create")]
+    [Migration("20200521002002_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
