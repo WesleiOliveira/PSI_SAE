@@ -1,34 +1,30 @@
 ﻿@model IEnumerable<ProvaPublicadaViewModel>
 
-@{
-    ViewData["Title"] = "Minhas Avaliações";
-}
-
-<h2>Provas</h2>
+<h2>Minhas Avaliações</h2>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Avaliacao
+                @Html.DisplayNameFor(model => model.FirstOrDefault().AvaliacaoId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataCriacao)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataCriacao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataInicio)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataInicio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataFim)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataFim)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ValorProva)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ValorProva)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NotaObtida)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NotaObtida)
             </th>
         </tr>
     </thead>
@@ -37,34 +33,26 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Disciplina) / @Html.DisplayFor(modelItem => item.Materia) / @Html.DisplayFor(modelItem => item.Descricao)
+                @item.Materia / @item.Disciplina / @item.Descricao
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DataCriacao)
+                @item.DataCriacao.ToString("dd/MM/yyyy")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DataInicio)
+                @item.DataInicio.ToString("dd/MM/yyyy")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DataFim)
+                @item.DataFim.ToString("dd/MM/yyyy")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ValorProva)
+                @item.ValorProva
             </td>
             <td>
-                @if (item.Status == "Agendada" || item.Status == "Disponível")
-                {
-                    <label>---</label>
-                }
-                @if (item.Status == "Perdida")
-                {
-                    <label>0</label>
-                }
+                @item.Status
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @(item.Status == "Perdida" ? 0m.ToString("N2") : item.Status == "Realizada" ? item.NotaObtida.ToString("N2") : "---")
             </td>
-
         </tr>
         }
     </tbody>

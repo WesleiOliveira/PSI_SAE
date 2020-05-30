@@ -13,10 +13,8 @@ namespace PUC.LDSI.MVC.Controllers
         {
             get
             {
-
                 if (_user == null)
                     _user = _userManager.GetUserAsync(User).Result;
-
                 return _user;
             }
         }
@@ -26,7 +24,6 @@ namespace PUC.LDSI.MVC.Controllers
         {
             get
             {
-
                 if (_integrationUserId == 0)
                     _integrationUserId = UsuarioLogado.IntegrationId;
 

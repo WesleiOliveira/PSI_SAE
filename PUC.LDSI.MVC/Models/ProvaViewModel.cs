@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace PUC.LDSI.MVC.Models
 {
-    public class ProvaPublicadaViewModel
+    public class ProvaViewModel
     {
-        [DisplayName("Avaliação")]
-        public int AvaliacaoId { get; set; }
+         public int AvaliacaoId { get; set; }
 
         [DisplayName("Disciplina")]
         public string Disciplina { get; set; }
@@ -24,7 +26,5 @@ namespace PUC.LDSI.MVC.Models
         public int ValorProva { get; set; }
         [DisplayName("Nota")]
         public decimal NotaObtida { get; set; }
-        [DisplayName("Situação")]
-        public string Status { get; set; }
     }
 }

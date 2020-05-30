@@ -1,12 +1,8 @@
 ﻿@model IEnumerable<PublicacaoViewModel>
-
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Publicações";
 }
-
-<h2>Publicações</h2>
-
+<h2>@ViewData["Title"]</h2>
 <p>
     <a asp-action="Create" class="btn btn-default">Nova Publicação</a>
 </p>
@@ -14,52 +10,53 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DataInicio)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Turma)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataFim)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Avaliacao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ValorProva)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ValorProva)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Avaliacao)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataCriacao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Turma)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataInicio)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataCriacao)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataFim)
             </th>
-            <th></th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFim)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorProva)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Avaliacao.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Turma.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataCriacao)
-            </td>
-            <td>
-                <a asp-action="Edit"  class="fas fa-edit" asp-route-id="@item.Id"></a> |
-                <a asp-action="Delete" class="far fa-trash-alt" asp-route-id="@item.Id"></a>
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Turma.Nome)
+                </td>
+                <td>
+                    @(item.Avaliacao.Materia + " - " + item.Avaliacao.Disciplina + " - " + item.Avaliacao.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorProva)
+                </td>
+                <td>
+                    @item.DataCriacao.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @item.DataInicio.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @item.DataFim.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit" title="Editar Publicação"></i></a>&nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt" title="Excluir Publicação"></i></a>&nbsp;
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

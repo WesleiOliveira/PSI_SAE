@@ -1,5 +1,4 @@
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,8 +42,8 @@ namespace PUC.LDSI.MVC
 
             services.AddAuthorization(options =>
             {
-            options.AddPolicy("Professor", policy => policy.RequireRole("Professor"));
-            options.AddPolicy("Aluno", policy => policy.RequireRole("Aluno"));
+                options.AddPolicy("Professor", policy => policy.RequireRole("Professor"));
+                options.AddPolicy("Aluno", policy => policy.RequireRole("Aluno"));
             });
         }
 
@@ -67,4 +66,3 @@ namespace PUC.LDSI.MVC
         }
     }
 }
-

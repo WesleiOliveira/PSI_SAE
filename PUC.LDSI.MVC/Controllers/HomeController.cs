@@ -24,16 +24,18 @@ namespace PUC.LDSI.MVC.Controllers
 
             if (exceptionFeature.Error is DomainException) {
                 errorViewModel.ErrorTitle = exceptionFeature.Error.Message;
+
                 errorViewModel.Errors = (exceptionFeature.Error as DomainException).Erros;
             }
             else {
-
                 var ex = exceptionFeature.Error;
 
                 while (ex.InnerException != null) ex = ex.InnerException;
 
                 errorViewModel.Trace = ex.ToString();
+
                 errorViewModel.Errors = new string[] { ex.Message };
+
                 errorViewModel.ErrorTitle = "Ocorreu um erro inesperado!";
             }
 
