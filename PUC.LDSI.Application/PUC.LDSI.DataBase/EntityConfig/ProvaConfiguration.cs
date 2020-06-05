@@ -18,6 +18,8 @@ namespace PUC.LDSI.DataBase.EntityConfig
                 .WithMany(x => x.Provas)
                 .HasForeignKey(x => x.AvaliacaoId);
 
+            builder.Property(x => x.DataProva).HasColumnType("date");
+
             new EntityConfiguration();
         }
     }
