@@ -33,10 +33,7 @@ namespace PUC.LDSI.MVC.Models
         {
             get
             {
-                if (Questoes == null || Questoes.Count == 0)
-                    return false;
-                else
-                    return Questoes.Count > 0 && !Questoes.Where(x => x.Erro != string.Empty).Any();
+                return Questoes != null && Questoes.Count > 0 && !Questoes.Where(x => x.Erro != string.Empty).Any();
             }
         }
     }

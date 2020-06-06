@@ -19,6 +19,7 @@ namespace PUC.LDSI.Application.AppServices
             try
             {
                 var retorno = await _professorService.IncluirProfessorAsync(nome);
+
                 return new DataResult<int>(retorno);
             }
             catch (Exception ex)

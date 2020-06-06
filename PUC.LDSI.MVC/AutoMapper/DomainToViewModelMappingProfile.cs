@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.MVC.Models;
+using System;
+using System.Linq;
 
 namespace PUC.LDSI.MVC.AutoMapper
 {
@@ -15,15 +17,30 @@ namespace PUC.LDSI.MVC.AutoMapper
                 .ReverseMap();
 
             CreateMap<QuestaoAvaliacao, QuestaoAvaliacaoViewModel>().ReverseMap();
-            CreateMap<Publicacao, PublicacaoViewModel>().ReverseMap();
+
             CreateMap<OpcaoAvaliacao, OpcaoAvaliacaoViewModel>().ReverseMap();
 
+            CreateMap<Publicacao, PublicacaoViewModel>().ReverseMap();
+
             CreateMap<Publicacao, ProvaPublicadaViewModel>()
-                .ForMember(x => x.Disciplina, opt => opt.MapFrom(x => x.Avaliacao.Disciplina))
-                .ForMember(x => x.Descricao, opt => opt.MapFrom(x => x.Avaliacao.Descricao))
-                .ForMember(x => x.Materia, opt => opt.MapFrom(x => x.Avaliacao.Materia))
-                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Avaliacao))
-                .ReverseMap();
+                .ForMember(d => d.Materia, opt => opt.MapFrom(a => a.Avaliacao.Materia))
+                .ForMember(d => d.Disciplina, opt => opt.MapFrom(a => a.Avaliacao.Disciplina))
+                .ForMember(d => d.Descricao, opt => opt.MapFrom(a => a.Avaliacao.Descricao))
+                .ForMember(d => d.Status, opt => opt.ResolveUsing(src => StatusProvaResolve(src)));
+
+            CreateMap<Publicacao, ProvaViewModel>().ReverseMap();
+        }
+
+        private string StatusProvaResolve(Publicacao publicacao)
+        {
+            if (publicacao.DataInicio > DateTime.Today)
+                return "Agendada";
+            else if (publicacao.Avaliacao.Provas.Any())
+                return "Realizada";
+            else if (publicacao.DataFim >= DateTime.Today)
+                return "Disponível";
+            else
+                return "Perdida";
         }
     }
 }

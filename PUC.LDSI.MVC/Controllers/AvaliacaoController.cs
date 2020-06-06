@@ -16,7 +16,6 @@ namespace PUC.LDSI.MVC.Controllers
     public class AvaliacaoController : BaseController
     {
         private readonly IAvaliacaoAppService _avaliacaoAppService;
-
         private readonly IAvaliacaoRepository _avaliacaoRepository;
 
         public AvaliacaoController(UserManager<Usuario> user,
@@ -24,6 +23,7 @@ namespace PUC.LDSI.MVC.Controllers
                                    IAvaliacaoRepository avaliacaoRepository) : base(user)
         {
             _avaliacaoAppService = avaliacaoAppService;
+
             _avaliacaoRepository = avaliacaoRepository;
         }
 

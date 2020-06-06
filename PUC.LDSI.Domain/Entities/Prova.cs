@@ -7,14 +7,11 @@ namespace PUC.LDSI.Domain.Entities
     {
         public int AlunoId { get; set; }
         public int AvaliacaoId { get; set; }
-<<<<<<< HEAD
         public decimal NotaObtida { get; set; }
-        public DateTime? DataProva { get; set; }
-=======
         public DateTime DataProva { get; set; }
->>>>>>> parent of e0670da... Consistências
         public Aluno Aluno { get; set; }
         public Avaliacao Avaliacao { get; set; }
+
         public List<QuestaoProva> QuestoesProva { get; set; }
 
         public override string[] Validate()

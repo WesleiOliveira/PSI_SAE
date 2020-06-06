@@ -98,7 +98,6 @@ namespace PUC.LDSI.MVC.Controllers
             {
                 var result = await _avaliacaoAppService.AlterarOpcaoAvaliacaoAsync(opcaoAvaliacao.Id, opcaoAvaliacao.Descricao, opcaoAvaliacao.Verdadeira);
 
-
                 if (result.Success)
                     return RedirectToAction(nameof(Index), new { questaoId = opcaoAvaliacao.QuestaoId });
                 else
