@@ -1,67 +1,82 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions.Impl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PUC.LDSI.Application.Interfaces;
+using PUC.LDSI.DataBase;
+using PUC.LDSI.Domain.Entities;
 using PUC.LDSI.Domain.Interfaces.Repository;
 using PUC.LDSI.Identity.Entities;
 using PUC.LDSI.MVC.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
 {
     [Authorize(Policy = "Professor")]
     public class PublicacaoController : BaseController
     {
-        private readonly IPublicacaoRepository _publicacaoRepository;
         private readonly IAvaliacaoAppService _avaliacaoAppService;
+        private readonly ITurmaAppService _turmaAppService;
         private readonly ITurmaRepository _turmaRepository;
+        private readonly IPublicacaoRepository _publicacaoRepository;
         private readonly IAvaliacaoRepository _avaliacaoRepository;
 
         public PublicacaoController(UserManager<Usuario> user,
-                                    IPublicacaoRepository publicacaoRepository,
-                                    IAvaliacaoAppService avaliacaoAppService,
-                                    ITurmaRepository turmaRepository,
-                                    IAvaliacaoRepository avaliacaoRepository) : base(user)
+            ITurmaAppService turmaAppService,
+            IAvaliacaoAppService avaliacaoAppService,
+            IPublicacaoRepository publicacaoRepository,
+            IAvaliacaoRepository avaliacaoRepository,
+            ITurmaRepository turmaRepository) : base(user)
         {
-            _publicacaoRepository = publicacaoRepository;
+            _turmaAppService = turmaAppService;
             _avaliacaoAppService = avaliacaoAppService;
-            _turmaRepository = turmaRepository;
+            _publicacaoRepository = publicacaoRepository;
             _avaliacaoRepository = avaliacaoRepository;
+            _turmaRepository = turmaRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            var result = await _publicacaoRepository.ListarPublicacoesDoProfessorAsync(IntegrationUserId);
-
-            var publicacoes = Mapper.Map<List<PublicacaoViewModel>>(result.ToList());
-
+            var result = _publicacaoRepository.ListarPublicacoesDoProfessorAsync(UsuarioLogado.IntegrationId);
+            var publicacoes = Mapper.Map<List<PublicacaoViewModel>>(result.Result);
             return View(publicacoes);
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Edit(int? id)
         {
-            ViewData["AvaliacaoId"] = await ObterAvaliacoesDoProfessorParaSelecao();
-            ViewData["TurmaId"] = new SelectList(_turmaRepository.ObterTodos(), "Id", "Nome");
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            
+            var publicacao = await _publicacaoRepository.ObterAsync(id.Value);
+            publicacao.Avaliacao = await _avaliacaoRepository.ObterAsync(publicacao.AvaliacaoId);
+            publicacao.Turma = await _turmaRepository.ObterAsync(publicacao.TurmaId);
+
+            if (publicacao == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = Mapper.Map<PublicacaoViewModel>(publicacao);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AvaliacaoId,TurmaId,DataInicio,DataFim,ValorProva")] PublicacaoViewModel publicacao)
+        public async Task<IActionResult> Create([Bind("AvaliacaoId,TurmaId,DataInicio,DataFim,ValorProva,Id,DataCriacao")] PublicacaoViewModel publicacao)
         {
             if (ModelState.IsValid)
             {
-                var result = await _avaliacaoAppService.AdicionarPublicacaoAsync(
-                    IntegrationUserId,
-                    publicacao.AvaliacaoId,
-                    publicacao.TurmaId,
-                    publicacao.DataInicio,
-                    publicacao.DataFim,
-                    publicacao.ValorProva);
+                var result = await _avaliacaoAppService.AdicionarPublicacaoAsync(UsuarioLogado.IntegrationId, publicacao.AvaliacaoId, 
+                    publicacao.TurmaId, publicacao.DataInicio, publicacao.DataFim, publicacao.ValorProva);
 
                 if (result.Success)
                     return RedirectToAction(nameof(Index));
@@ -72,33 +87,15 @@ namespace PUC.LDSI.MVC.Controllers
             return View(publicacao);
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null) { return NotFound(); }
-
-            var result = await _publicacaoRepository.ObterAsync(id.Value);
-
-            if (result == null) { return NotFound(); }
-
-            var publicacao = Mapper.Map<PublicacaoViewModel>(result);
-
-            return View(publicacao);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoId,TurmaId,DataInicio,DataFim,ValorProva,Id")] PublicacaoViewModel publicacao)
+        public async Task<IActionResult> Edit(int id, [Bind("AvaliacaoId,TurmaId,DataInicio,DataFim,ValorProva,Id,DataCriacao")] PublicacaoViewModel publicacao)
         {
             if (id != publicacao.Id) { return NotFound(); }
 
             if (ModelState.IsValid)
             {
-                var result = await _avaliacaoAppService.AlterarPublicacaoAsync(
-                    IntegrationUserId,
-                    publicacao.Id,
-                    publicacao.DataInicio,
-                    publicacao.DataFim,
-                    publicacao.ValorProva);
+                var result = await _avaliacaoAppService.AlterarPublicacaoAsync(UsuarioLogado.IntegrationId, publicacao.Id, publicacao.DataInicio, publicacao.DataFim, publicacao.ValorProva);
 
                 if (result.Success)
                     return RedirectToAction(nameof(Index));
@@ -117,43 +114,53 @@ namespace PUC.LDSI.MVC.Controllers
 
             if (result == null) { return NotFound(); }
 
-            var publicacao = Mapper.Map<PublicacaoViewModel>(result);
+            var publicacao = await _publicacaoRepository.ObterAsync(id.Value);
+            publicacao.Avaliacao = await _avaliacaoRepository.ObterAsync(publicacao.AvaliacaoId);
+            publicacao.Turma = await _turmaRepository.ObterAsync(publicacao.TurmaId);
 
-            return View(publicacao);
+            var viewModel = Mapper.Map<PublicacaoViewModel>(publicacao);
+
+            return View(viewModel);
         }
+
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userId = IntegrationUserId;
-
-            var result = await _avaliacaoAppService.ExcluirPublicacaoAsync(userId, id);
-
-            if (result.Success)
-                return RedirectToAction(nameof(Index));
-            else
-                throw result.Exception;
+            var publicacao = await _avaliacaoAppService.ExcluirPublicacaoAsync(UsuarioLogado.IntegrationId, id);
+            return RedirectToAction(nameof(Index));
         }
 
-        private async Task<List<SelectListItem>> ObterAvaliacoesDoProfessorParaSelecao(int avaliacaoSelecionadaId = 0)
+
+        public IActionResult Create()
         {
-            var lista = new List<SelectListItem>();
+            var turmas = _turmaAppService.ListarTurmas();
+            var avaliacoes = _avaliacaoAppService.ListarAvaliacoes();
 
-            var avaliacoes = await _avaliacaoRepository.ListarAvaliacoesDoProfessorAsync(IntegrationUserId);
-
-            foreach (var avaliacao in avaliacoes)
+            List<SelectListItem> ObterTurmas()
             {
-                lista.Add(new SelectListItem()
+                var lista = new List<SelectListItem>();
+                turmas.Data.ForEach(x =>
                 {
-                    Text = string.Format("{0}/{1}/{2}", avaliacao.Disciplina, avaliacao.Materia, avaliacao.Descricao),
-                    Value = avaliacao.Id.ToString(),
-                    Selected = avaliacao.Id == avaliacaoSelecionadaId
+                    lista.Add(new SelectListItem { Text = x.Nome, Value = x.Id.ToString(), Selected = false });
                 });
+                return lista;
             }
 
-            return lista;
-        }
+            List<SelectListItem> ObterAvaliacoes()
+            {
+                var lista = new List<SelectListItem>();
+                avaliacoes.Data.ForEach(x =>
+                {
+                    lista.Add(new SelectListItem { Text = x.Descricao, Value = x.Id.ToString(), Selected = false });
+                });
+                return lista;
+            }
 
+            ViewData["Turmas"] = ObterTurmas();
+            ViewData["Avaliacoes"] = ObterAvaliacoes();
+            return View();
+        }
     }
 }

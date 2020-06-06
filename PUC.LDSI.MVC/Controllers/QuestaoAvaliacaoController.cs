@@ -34,7 +34,6 @@ namespace PUC.LDSI.MVC.Controllers
             if (avaliacaoId == null) { return NotFound(); }
 
             var result = await _avaliacaoRepository.ObterAsync(avaliacaoId.Value);
-
             var avaliacao = Mapper.Map<AvaliacaoViewModel>(result);
 
             return View(avaliacao);

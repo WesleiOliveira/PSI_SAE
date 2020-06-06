@@ -91,7 +91,6 @@ namespace PUC.LDSI.Application.AppServices
             try
             {
                 var retorno = await _turmaService.IncluirAlunoAsync(turmaId, nomeAluno);
-
                 return new DataResult<int>(retorno);
             }
             catch (Exception ex)

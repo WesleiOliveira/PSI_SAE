@@ -26,6 +26,7 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
         private readonly UserManager<Usuario> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        
         private readonly IProfessorAppService _professorAppService;
         private readonly ITurmaRepository _turmaRepository;
         private readonly ITurmaAppService _turmaAppService;
@@ -39,13 +40,13 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             ITurmaRepository turmaRepository,
             ITurmaAppService turmaAppService)
         {
+            _professorAppService = professorAppService;
+            _turmaRepository = turmaRepository;
+            _turmaAppService = turmaAppService;
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _professorAppService = professorAppService;
-            _turmaRepository = turmaRepository;
-            _turmaAppService = turmaAppService;
         }
 
         [BindProperty]
@@ -101,7 +102,7 @@ namespace PUC.LDSI.MVC.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var result = default(DataResult<int>);
+                var result = default(Application.DataResult<int>);
 
                 if (Input.Tipo == 1)
                     result = await _professorAppService.IncluirProfessorAsync(Input.Nome);

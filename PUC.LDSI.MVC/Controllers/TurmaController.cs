@@ -18,15 +18,14 @@ namespace PUC.LDSI.MVC.Controllers
         private readonly ITurmaAppService _turmaAppService;
         private readonly ITurmaRepository _turmaRepository;
 
-        public TurmaController(UserManager<Usuario> user,
-                               ITurmaAppService turmaAppService,
+        public TurmaController(UserManager<Usuario> user, 
+                               ITurmaAppService turmaAppService, 
                                ITurmaRepository turmaRepository) : base(user)
         {
-            _turmaRepository = turmaRepository;
             _turmaAppService = turmaAppService;
+            _turmaRepository = turmaRepository;
         }
 
-        // GET: Turma
         public IActionResult Index()
         {
             var result = _turmaRepository.ObterTodos();
@@ -36,7 +35,6 @@ namespace PUC.LDSI.MVC.Controllers
             return View(turmas);
         }
 
-        // GET: Turma/Create
         public IActionResult Create()
         {
             return View();
@@ -58,7 +56,6 @@ namespace PUC.LDSI.MVC.Controllers
             return View(turma);
         }
 
-        // GET: Turma/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

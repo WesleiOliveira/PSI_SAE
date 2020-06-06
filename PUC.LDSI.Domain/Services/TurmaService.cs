@@ -82,7 +82,6 @@ namespace PUC.LDSI.Domain.Services
         public async Task<int> IncluirAlunoAsync(int turmaId, string nomeAluno)
         {
             var aluno = new Aluno() { Nome = nomeAluno, TurmaId = turmaId };
-
             var erros = aluno.Validate();
 
             if (erros.Length == 0)

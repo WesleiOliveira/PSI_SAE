@@ -23,6 +23,7 @@ namespace PUC.LDSI.DataBase.Repository
                 .Include(o => o.Opcoes)
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
 
+
             return questao;
         }
     }

@@ -9,7 +9,6 @@ namespace PUC.LDSI.DataBase.EntityConfig
         public void Configure(EntityTypeBuilder<QuestaoAvaliacao> builder)
         {
             builder.Property(x => x.Enunciado).IsRequired().HasColumnType("varchar(255)");
-
             builder.HasOne(x => x.Avaliacao)
                 .WithMany(x => x.Questoes)
                 .HasForeignKey(x => x.AvaliacaoId);

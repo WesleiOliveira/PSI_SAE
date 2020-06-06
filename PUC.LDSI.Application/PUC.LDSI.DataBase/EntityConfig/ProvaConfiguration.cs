@@ -13,7 +13,6 @@ namespace PUC.LDSI.DataBase.EntityConfig
             builder.HasOne(x => x.Aluno)
                 .WithMany(x => x.Provas)
                 .HasForeignKey(x => x.AlunoId);
-
             builder.HasOne(x => x.Avaliacao)
                 .WithMany(x => x.Provas)
                 .HasForeignKey(x => x.AvaliacaoId);
