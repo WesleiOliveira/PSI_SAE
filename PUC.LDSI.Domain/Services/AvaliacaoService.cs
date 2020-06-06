@@ -81,11 +81,8 @@ namespace PUC.LDSI.Domain.Services
 
         public async Task<int> AlterarAvaliacaoAsync(int id, string disciplina, string materia, string descricao)
         {
-            var publicacao = await _publicacaoRepository.ObterAsync(id);
-            if (publicacao != null)
-                throw new DomainException("Está avaliação já foi publicada!");
-
             var avaliacao = await _avaliacaoRepository.ObterAsync(id);
+
             avaliacao.Descricao = descricao;
             avaliacao.Disciplina = disciplina;
             avaliacao.Materia = materia;
@@ -103,10 +100,8 @@ namespace PUC.LDSI.Domain.Services
 
         public async Task<int> AlterarOpcaoAvaliacaoAsync(int id, string descricao, bool verdadeira)
         {
-            var publicacao = await _publicacaoRepository.ObterAsync(id);
-            if (publicacao != null)
-                throw new DomainException("Está avaliação já foi publicada!");
             var opcaoAvaliacao = await _opcaoAvaliacaoRepository.ObterAsync(id);
+
             ValidarOpcaoAvaliacao(opcaoAvaliacao.QuestaoId, verdadeira);
 
             opcaoAvaliacao.Descricao = descricao;
@@ -125,10 +120,8 @@ namespace PUC.LDSI.Domain.Services
 
         public async Task<int> AlterarQuestaoAvaliacaoAsync(int id, int tipo, string enunciado)
         {
-            var publicacao = await _publicacaoRepository.ObterAsync(id);
-            if (publicacao != null)
-                throw new DomainException("Está avaliação já foi publicada!");
             var questaoAvaliacao = await _questaoAvaliacaoRepository.ObterAsync(id);
+
             questaoAvaliacao.Tipo = tipo;
             questaoAvaliacao.Enunciado = enunciado;
 
@@ -145,18 +138,16 @@ namespace PUC.LDSI.Domain.Services
 
         public async Task ExcluirAvaliacaoAsync(int id)
         {
-            var publicacao = await _publicacaoRepository.ObterAsync(id);
-            if (publicacao != null)
-                throw new DomainException("Está avaliação já foi publicada!");
             var avaliacao = await _avaliacaoRepository.ObterAsync(id);
+
             if (avaliacao.Publicacoes?.Count > 0)
                 throw new DomainException("Não é possível excluir uma avaliação que já foi publicada ou realizada!");
 
-            if (avaliacao.Questoes?.Count > 0) 
+            if (avaliacao.Questoes?.Count > 0)
             {
-                foreach (var questao in avaliacao.Questoes) 
+                foreach (var questao in avaliacao.Questoes)
                 {
-                    if (questao.Opcoes.Count > 0) 
+                    if (questao.Opcoes.Count > 0)
                     {
                         foreach (var opcao in questao.Opcoes)
                             _opcaoAvaliacaoRepository.Excluir(opcao.Id);
@@ -177,10 +168,8 @@ namespace PUC.LDSI.Domain.Services
 
         public async Task<int> ExcluirOpcaoAvaliacaoAsync(int id)
         {
-            var publicacao = await _publicacaoRepository.ObterAsync(id);
-            if (publicacao != null)
-                throw new DomainException("Está avaliação já foi publicada!");
             var opcaoAvaliacao = await _opcaoAvaliacaoRepository.ObterAsync(id);
+
             if (opcaoAvaliacao.OpcoesProva?.Count > 0)
                 throw new DomainException("Não é possível excluir a opção de uma avaliação que já foi realizada!");
 
@@ -193,10 +182,8 @@ namespace PUC.LDSI.Domain.Services
 
         public async Task<int> ExcluirQuestaoAvaliacaoAsync(int id)
         {
-            var publicacao = await _publicacaoRepository.ObterAsync(id);
-            if (publicacao != null)
-                throw new DomainException("Está avaliação já foi publicada!");
             var questaoAvaliacao = await _questaoAvaliacaoRepository.ObterAsync(id);
+
             if (questaoAvaliacao.QuestoesProva?.Count > 0)
                 throw new DomainException("Não é possível excluir a questão de uma avaliação que já foi realizada!");
 
@@ -219,7 +206,8 @@ namespace PUC.LDSI.Domain.Services
 
         private void ValidarOpcaoAvaliacao(int questaoId, bool verdadeira)
         {
-            if (verdadeira) {
+            if (verdadeira)
+            {
                 var questaoGravada = _questaoAvaliacaoRepository.ObterAsync(questaoId).Result;
 
                 if (questaoGravada.Tipo == 1 && questaoGravada.Opcoes.Where(x => x.Verdadeira).Any())
@@ -248,8 +236,7 @@ namespace PUC.LDSI.Domain.Services
 
                 if (avaliacao.ProfessorId != professorId)
                     throw new DomainException("A avaliação informada não pertence ao professor logado!");
-                if (avaliacao.Questoes.Where(x => x.Opcoes.Where(y => y.Verdadeira).Count() != 1).Any())
-                    throw new DomainException("Esta avaliação possui pendências e não pode ser publicada!");
+
                 if (avaliacao.Publicacoes.Where(x => x.TurmaId == turmaId).Any())
                     throw new DomainException("Essa avaliação já foi publicada para esta turma!");
 

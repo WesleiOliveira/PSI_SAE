@@ -8,7 +8,7 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Prova> builder)
         {
-            builder.Property(x => x.DataProva).HasColumnType("date");
+            builder.Property(x => x.DataProva).HasColumnType("Date");
             builder.HasOne(x => x.Aluno)
                 .WithMany(x => x.Provas)
                 .HasForeignKey(x => x.AlunoId);

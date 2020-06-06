@@ -10,8 +10,8 @@ using PUC.LDSI.DataBase;
 namespace PUC.LDSI.DataBase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200606022822_create")]
-    partial class create
+    [Migration("20200606040600_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -149,7 +149,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.Property<DateTime>("DataCriacao");
 
                     b.Property<DateTime?>("DataProva")
-                        .HasColumnType("date");
+                        .HasColumnType("Date");
 
                     b.HasKey("Id");
 

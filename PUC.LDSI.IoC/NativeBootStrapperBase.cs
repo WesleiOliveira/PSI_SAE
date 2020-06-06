@@ -18,7 +18,7 @@ namespace PUC.LDSI.IoC
 
             //Domain - Repository
             services.AddScoped<IAlunoRepository, AlunoRepository>();
-            services.AddScoped<IAvaliacaoRepository, AvaliacaoRepository>();
+            services.AddScoped<IProvaRepository, ProvaRepository>();
             services.AddScoped<IOpcaoAvaliacaoRepository, OpcaoAvaliacaoRepository>();
             services.AddScoped<IProfessorRepository, ProfessorRepository>();
             services.AddScoped<IQuestaoAvaliacaoRepository, QuestaoAvaliacaoRepository>();

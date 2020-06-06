@@ -147,7 +147,7 @@ namespace PUC.LDSI.DataBase.Migrations
                     b.Property<DateTime>("DataCriacao");
 
                     b.Property<DateTime?>("DataProva")
-                        .HasColumnType("date");
+                        .HasColumnType("Date");
 
                     b.HasKey("Id");
 

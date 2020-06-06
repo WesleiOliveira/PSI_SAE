@@ -16,12 +16,12 @@ namespace PUC.LDSI.MVC.Controllers
     public class QuestaoAvaliacaoController : BaseController
     {
         private readonly IAvaliacaoAppService _avaliacaoAppService;
-        private readonly IAvaliacaoRepository _avaliacaoRepository;
+        private readonly IProvaRepository _avaliacaoRepository;
         private readonly IQuestaoAvaliacaoRepository _questaoAvaliacaoRepository;
 
         public QuestaoAvaliacaoController(UserManager<Usuario> user,
                                           IAvaliacaoAppService avaliacaoAppService,
-                                          IAvaliacaoRepository avaliacaoRepository,
+                                          IProvaRepository avaliacaoRepository,
                                           IQuestaoAvaliacaoRepository questaoAvaliacaoRepository) : base(user)
         {
             _avaliacaoAppService = avaliacaoAppService;
