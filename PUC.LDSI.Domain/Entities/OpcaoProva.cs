@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PUC.LDSI.Domain.Entities
 {
-    public class OpcapProva : Entitity
+    public class OpcaoProva : Entitity
     {
-        public OpcapProva() { }
+        public OpcaoProva() { }
 
         public int Id { get; set; }
         public DateTime DataCriacao { get; set; }
