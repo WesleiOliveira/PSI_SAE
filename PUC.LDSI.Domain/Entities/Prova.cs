@@ -9,6 +9,7 @@ namespace PUC.LDSI.Domain.Entities
         public int AvaliacaoId { get; set; }
         public decimal NotaObtida { get; set; }
         public DateTime? DataProva { get; set; }
+        public DateTime? DataProvaNova { get; set; }
         public Aluno Aluno { get; set; }
         public Avaliacao Avaliacao { get; set; }
 

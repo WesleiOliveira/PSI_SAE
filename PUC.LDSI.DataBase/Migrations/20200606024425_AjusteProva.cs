@@ -2,7 +2,7 @@
 
 namespace PUC.LDSI.DataBase.Migrations
 {
-    public partial class Create : Migration
+    public partial class AjusteProva : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
