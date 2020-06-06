@@ -248,6 +248,9 @@ namespace PUC.LDSI.Domain.Services
                 if (avaliacao.Publicacoes.Where(x => x.TurmaId == turmaId).Any())
                     throw new DomainException("Essa avaliação já foi publicada para esta turma!");
 
+                if (avaliacao.Questoes.Where(x => x.Opcoes.Where(y => y.Verdadeira).Count() != 1).Any())
+                    throw new DomainException("Esta avaliação possui pendências e não pode ser publicada!");
+
                 if (!avaliacao.Questoes.Any() || avaliacao.Questoes.Where(x => x.Opcoes.Count < 4).Any())
                     throw new DomainException("Essa avaliação não está completa! É necessário que todas as questões tenham ao menos 4 opções!");
 
