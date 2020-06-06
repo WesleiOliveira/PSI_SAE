@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace PUC.LDSI.Application.Interfaces
 {
@@ -15,5 +16,9 @@ namespace PUC.LDSI.Application.Interfaces
         Task<DataResult<int>> ExcluirAvaliacaoAsync(int id);
         Task<DataResult<int>> ExcluirQuestaoAvaliacaoAsync(int id);
         Task<DataResult<int>> ExcluirOpcaoAvaliacaoAsync(int id);
+
+        Task<DataResult<int>> AdicionarPublicacaoAsync(int professorId, int avaliacaoId, int turmaId, DateTime dataInicio, DateTime dataFim, int valorProva);
+        Task<DataResult<int>> AlterarPublicacaoAsync(int professorId, int id, DateTime dataInicio, DateTime dataFim, int valorProva);
+        Task<DataResult<int>> ExcluirPublicacaoAsync(int professorId, int id);
     }
 }

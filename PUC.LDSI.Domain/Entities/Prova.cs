@@ -10,6 +10,7 @@ namespace PUC.LDSI.Domain.Entities
         public DateTime DataProva { get; set; }
         public Aluno Aluno { get; set; }
         public Avaliacao Avaliacao { get; set; }
+
         public List<QuestaoProva> QuestoesProva { get; set; }
 
         public override string[] Validate()

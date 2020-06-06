@@ -3,7 +3,6 @@ using PUC.LDSI.Domain.Exception;
 using PUC.LDSI.Domain.Interfaces.Repository;
 using PUC.LDSI.Domain.Interfaces.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,14 +11,17 @@ namespace PUC.LDSI.Domain.Services
     public class AvaliacaoService : IAvaliacaoService
     {
         private readonly IAvaliacaoRepository _avaliacaoRepository;
+        private readonly IPublicacaoRepository _publicacaoRepository;
         private readonly IOpcaoAvaliacaoRepository _opcaoAvaliacaoRepository;
         private readonly IQuestaoAvaliacaoRepository _questaoAvaliacaoRepository;
 
         public AvaliacaoService(IAvaliacaoRepository avaliacaoRepository,
+                                IPublicacaoRepository publicacaoRepository,
                                 IOpcaoAvaliacaoRepository opcaoAvaliacaoRepository,
                                 IQuestaoAvaliacaoRepository questaoAvaliacaoRepository)
         {
             _avaliacaoRepository = avaliacaoRepository;
+            _publicacaoRepository = publicacaoRepository;
             _opcaoAvaliacaoRepository = opcaoAvaliacaoRepository;
             _questaoAvaliacaoRepository = questaoAvaliacaoRepository;
         }
@@ -210,6 +212,90 @@ namespace PUC.LDSI.Domain.Services
                 if (questaoGravada.Tipo == 1 && questaoGravada.Opcoes.Where(x => x.Verdadeira).Any())
                     throw new DomainException("Já existe uma opção marcada como verdadeira para essa questão.");
             }
+        }
+
+        public async Task<int> AdicionarPublicacaoAsync(int professorId, int avaliacaoId, int turmaId, DateTime dataInicio, DateTime dataFim, int valorProva)
+        {
+            var publicacao = new Publicacao();
+
+            publicacao.AvaliacaoId = avaliacaoId;
+            publicacao.TurmaId = turmaId;
+            publicacao.DataInicio = dataInicio;
+            publicacao.DataFim = dataFim;
+            publicacao.ValorProva = valorProva;
+
+            var erros = publicacao.Validate();
+
+            if (erros.Length == 0)
+            {
+                var avaliacao = await _avaliacaoRepository.ObterAsync(avaliacaoId);
+
+                if (avaliacao == null)
+                    throw new DomainException("A avaliação informada não foi encontrada!");
+
+                if (avaliacao.ProfessorId != professorId)
+                    throw new DomainException("A avaliação informada não pertence ao professor logado!");
+
+                if (avaliacao.Publicacoes.Where(x => x.TurmaId == turmaId).Any())
+                    throw new DomainException("Essa avaliação já foi publicada para esta turma!");
+
+                if (!avaliacao.Questoes.Any() || avaliacao.Questoes.Where(x => x.Opcoes.Count < 4).Any())
+                    throw new DomainException("Essa avaliação não está completa! É necessário que todas as questões tenham ao menos 4 opções!");
+
+                await _publicacaoRepository.AdicionarAsync(publicacao);
+
+                _publicacaoRepository.SaveChanges();
+
+                return publicacao.Id;
+            }
+            else throw new DomainException(erros);
+        }
+
+        public async Task<int> AlterarPublicacaoAsync(int professorId, int id, DateTime dataInicio, DateTime dataFim, int valorProva)
+        {
+            var publicacao = await _publicacaoRepository.ObterAsync(id);
+
+            if (publicacao == null)
+                throw new DomainException("A publicação não foi encontrada!");
+
+            publicacao.DataInicio = dataInicio;
+            publicacao.DataFim = dataFim;
+            publicacao.ValorProva = valorProva;
+
+            var erros = publicacao.Validate();
+
+            if (erros.Length == 0)
+            {
+                if (publicacao.Avaliacao.ProfessorId != professorId)
+                    throw new DomainException("A avaliação informada não pertence ao professor logado!");
+
+                _publicacaoRepository.Modificar(publicacao);
+
+                _publicacaoRepository.SaveChanges();
+
+                return publicacao.Id;
+            }
+            else throw new DomainException(erros);
+        }
+
+        public async Task<int> ExcluirPublicacaoAsync(int professorId, int id)
+        {
+            var publicacao = await _publicacaoRepository.ObterAsync(id);
+
+            if (publicacao == null)
+                throw new DomainException("A publicação não foi encontrada!");
+
+            if (publicacao.Avaliacao.ProfessorId != professorId)
+                throw new DomainException("A avaliação informada não pertence ao professor logado!");
+
+            if (publicacao.Avaliacao.Provas?.Count > 0)
+                throw new DomainException("Não é permitido excluir uma publicação quando a prova já foi feita por algum aluno!");
+
+            _publicacaoRepository.Excluir(id);
+
+            _publicacaoRepository.SaveChanges();
+
+            return publicacao.Id;
         }
     }
 }

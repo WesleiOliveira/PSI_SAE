@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PUC.LDSI.Application.Interfaces;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
 {
+    [Authorize(Policy = "Professor")]
     public class AvaliacaoController : BaseController
     {
         private readonly IAvaliacaoAppService _avaliacaoAppService;

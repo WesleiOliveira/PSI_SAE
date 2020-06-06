@@ -19,8 +19,8 @@ namespace PUC.LDSI.DataBase.Repository
         public async Task<List<Avaliacao>> ListarAvaliacoesDoProfessorAsync(int professorId)
         {
             var query = _context.Avaliacao
-                .Include(x => x.Questoes).ThenInclude(y => y.Opcoes)
                 .Include(x => x.Professor)
+                .Include(x => x.Questoes).ThenInclude(y => y.Opcoes)
                 .Where(x => x.Professor.Id == professorId);
 
             return await query.ToListAsync();

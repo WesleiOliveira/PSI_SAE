@@ -139,5 +139,47 @@ namespace PUC.LDSI.Application.AppServices
                 return new DataResult<int>(ex);
             }
         }
+
+        public async Task<DataResult<int>> AdicionarPublicacaoAsync(int professorId, int avaliacaoId, int turmaId, DateTime dataInicio, DateTime dataFim, int valorProva)
+        {
+            try
+            {
+                var retorno = await _avaliacaoService.AdicionarPublicacaoAsync(professorId, avaliacaoId, turmaId, dataInicio, dataFim, valorProva);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
+        }
+
+        public async Task<DataResult<int>> AlterarPublicacaoAsync(int professorId, int id, DateTime dataInicio, DateTime dataFim, int valorProva)
+        {
+            try
+            {
+                var retorno = await _avaliacaoService.AlterarPublicacaoAsync(professorId, id, dataInicio, dataFim, valorProva);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
+        }
+
+        public async Task<DataResult<int>> ExcluirPublicacaoAsync(int professorId, int id)
+        {
+            try
+            {
+                var retorno = await _avaliacaoService.ExcluirPublicacaoAsync(professorId, id);
+
+                return new DataResult<int>(retorno);
+            }
+            catch (Exception ex)
+            {
+                return new DataResult<int>(ex);
+            }
+        }
     }
 }

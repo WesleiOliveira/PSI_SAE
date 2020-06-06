@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ProvaPublicadaViewModel>
+
+<h2>Minhas Avaliações</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().AvaliacaoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataCriacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DataFim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ValorProva)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Status)
+            </th>
+            <th>
+                Nota
+            </th>
+            <th>
+                Ação
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @item.Materia / @item.Disciplina / @item.Descricao
+            </td>
+            <td>
+                @item.DataCriacao.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @item.DataInicio.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @item.DataFim.ToString("dd/MM/yyyy")
+            </td>
+            <td>
+                @item.ValorProva
+            </td>
+            <td>
+                @item.Status
+            </td>
+            <td>
+                @(item.Status == "Perdida" ? 0m.ToString("N2") : item.Status == "Realizada" ? 0m.ToString("N2") : "---")
+            </td>
+            @if (item.Status == "Disponivel")
+            {
+            <td>
+                <a asp-action="IniciarProva" asp-route-id="@item.AvaliacaoId"><i class="fas fa-play"></i></a>
+            </td>
+            }
+            
+        </tr>
+        }
+    </tbody>
+</table>

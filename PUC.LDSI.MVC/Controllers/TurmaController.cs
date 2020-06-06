@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PUC.LDSI.Application.Interfaces;
@@ -11,17 +12,18 @@ using System.Threading.Tasks;
 
 namespace PUC.LDSI.MVC.Controllers
 {
+    [Authorize(Policy = "Professor")]
     public class TurmaController : BaseController
     {
         private readonly ITurmaAppService _turmaAppService;
         private readonly ITurmaRepository _turmaRepository;
 
-        public TurmaController(UserManager<Usuario> user, 
-                               ITurmaAppService turmaAppService, 
+        public TurmaController(UserManager<Usuario> user,
+                               ITurmaAppService turmaAppService,
                                ITurmaRepository turmaRepository) : base(user)
         {
-            _turmaAppService = turmaAppService;
             _turmaRepository = turmaRepository;
+            _turmaAppService = turmaAppService;
         }
 
         // GET: Turma
