@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PUC.LDSI.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PUC.LDSI.DataBase.EntityConfig
 {
@@ -11,7 +8,19 @@ namespace PUC.LDSI.DataBase.EntityConfig
     {
         public void Configure(EntityTypeBuilder<Prova> builder)
         {
-            throw new NotImplementedException();
+            builder.Property(x => x.DataProva).HasColumnType("date");
+
+            builder.HasOne(x => x.Aluno)
+                .WithMany(x => x.Provas)
+                .HasForeignKey(x => x.AlunoId);
+            
+            builder.HasOne(x => x.Avaliacao)
+                .WithMany(x => x.Provas)
+                .HasForeignKey(x => x.AvaliacaoId);
+            
+            builder.Ignore(x => x.NotaObtida);
+            
+            new EntityConfiguration();
         }
     }
 }

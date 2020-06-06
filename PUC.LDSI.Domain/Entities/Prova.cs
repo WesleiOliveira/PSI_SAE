@@ -12,7 +12,7 @@ namespace PUC.LDSI.Domain.Entities
         public DateTime DataCriacao { get; set; }
         public int AvaliacaoId { get; set; }
         public int AlunoId { get; set; }
-        public DateTime DataProva { get; set; }
+        public DateTime? DataProva { get; set; }
         public decimal NotaObtida { get; set; }
 
         public override string[] Validate()
